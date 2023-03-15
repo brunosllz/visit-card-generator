@@ -16,7 +16,7 @@ const describeStepSchema = z.object({
   username: z.string().refine((username) => username.trim().length > 0, {
     message: 'Você deve informar o username.',
   }),
-  fullName: z.string().refine((fullName) => fullName.trim().length > 0, {
+  name: z.string().refine((fullName) => fullName.trim().length > 0, {
     message: 'Você deve informar o nome completo.',
   }),
   description: z
@@ -78,10 +78,10 @@ export function DescribeStep({ navigateTo }: DescribeStepProps) {
           <TextInput.Root>
             <TextInput.Input
               placeholder="John Doe"
-              hasError={!!errors.fullName}
-              {...register('fullName')}
+              hasError={!!errors.name}
+              {...register('name')}
             />
-            <TextInput.MessageError message={errors.fullName?.message} />
+            <TextInput.MessageError message={errors.name?.message} />
           </TextInput.Root>
         </label>
 

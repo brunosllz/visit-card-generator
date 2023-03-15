@@ -11,15 +11,17 @@ datasource db {
 }
 
 model User {
-  id          String   @id @default(uuid())
-  name        String
-  email       String
-  username    String   @unique
-  github      String
-  linkedin    String
-  description String
-  image_url   String
-  created_at  DateTime @default(now())
+  id                    String   @id @default(uuid())
+  name                  String
+  email                 String
+  username              String   @unique
+  github                String
+  linkedin              String
+  description           String
+  image_url             String
+  card_background_color String
+  card_text_color       String
+  created_at            DateTime @default(now())
 
   @@map("users")
 }

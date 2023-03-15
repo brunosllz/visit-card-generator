@@ -16,13 +16,13 @@ export function GenerateCardForm() {
 
   return (
     <>
-      {/* {navigateToStep === 'describeStep' ? (
+      {navigateToStep === 'describeStep' ? (
         <DescribeStep navigateTo={handleNavigateToStep} />
       ) : navigateToStep === 'socialStep' ? (
         <SocialStep navigateTo={handleNavigateToStep} />
-      ) : ( */}
-      <CustomStep navigateTo={handleNavigateToStep} />
-      {/* )} */}
+      ) : (
+        <CustomStep navigateTo={handleNavigateToStep} />
+      )}
     </>
   )
 }

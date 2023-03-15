@@ -18,7 +18,12 @@ export function CustomPreviewCardForm() {
         <label className="flex flex-col gap-2 relative">
           Logo image
           <TextInput.Root>
-            <TextInput.Input type="file" className="opacity-0" />
+            <TextInput.Input
+              type="file"
+              accept="image/*"
+              className="opacity-0"
+              {...register('logoImage')}
+            />
           </TextInput.Root>
           <div className="absolute flex items-center gap-2 bottom-3 left-5 cursor-pointer">
             <UploadSimple size={20} weight="bold" />

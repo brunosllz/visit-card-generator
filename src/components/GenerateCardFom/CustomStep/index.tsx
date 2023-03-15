@@ -7,12 +7,33 @@ import { MultiStep } from '@/components/MultiStep'
 
 import { ArrowRight } from 'phosphor-react'
 import { CustomPreviewCardForm } from './CustomPreviewCardForm'
+import { api } from '@/lib/axios'
 
 interface CustomStepProps {
   navigateTo: (step: 'describeStep' | 'socialStep' | 'customStep') => void
 }
 
+interface UploadedImage {
+  url: string
+}
+
+const MAX_FILE_SIZE = 400000
+const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png']
+
 const customStepSchema = z.object({
+  logoImage:
+    typeof window === 'undefined'
+      ? z.any()
+      : z
+          .instanceof(FileList)
+          .refine(
+            (files) => files?.[0]?.size <= MAX_FILE_SIZE,
+            `Max image size is 400KB.`,
+          )
+          .refine(
+            (files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
+            'Only .jpg, .jpeg and .png formats are supported.',
+          ),
   cardColor: z.string(),
   textColor: z.string(),
 })
@@ -28,11 +49,40 @@ export function CustomStep({ navigateTo }: CustomStepProps) {
     },
   })
 
-  const { handleSubmit } = customStepForm
+  const {
+    handleSubmit,
+    formState: { isSubmitting },
+  } = customStepForm
 
-  function handleSubmitSocial(data: any) {
-    console.log(data)
-    // const describeInfo = localStorage.getItem('@generateCard:register')
+  async function handleSubmitSocial(data: CustomStepInput) {
+    try {
+      const describeUserInfo = localStorage.getItem('@generateCard:register')
+      if (!describeUserInfo) {
+        return
+      }
+
+      const describeUserInfoParsed = JSON.parse(describeUserInfo)
+      const formData = new FormData()
+      formData.append('file', data.logoImage?.[0])
+      formData.append('upload_preset', 'card-qrcode')
+
+      const response = await fetch(
+        'https://api.cloudinary.com/v1_1/dhexs29hy/image/upload',
+        {
+          method: 'POST',
+          body: formData,
+        },
+      )
+      const uploadedImage: UploadedImage = await response.json()
+
+      await api.post('/users/register', {
+        ...describeUserInfoParsed,
+        imageUrl: uploadedImage.url,
+      })
+    } catch (error) {
+      console.log(error)
+      // TODO: implement a toast component for report the error
+    }
   }
 
   function handleGoBack() {
@@ -67,7 +117,12 @@ export function CustomStep({ navigateTo }: CustomStepProps) {
               onClick={handleGoBack}
             />
 
-            <Button title="Next" type="submit">
+            <Button
+              title="Next"
+              type="submit"
+              isLoading={isSubmitting}
+              disabled={isSubmitting}
+            >
               <ArrowRight weight="bold" />
             </Button>
           </div>

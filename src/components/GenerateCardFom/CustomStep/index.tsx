@@ -8,6 +8,7 @@ import { MultiStep } from '@/components/MultiStep'
 import { ArrowRight } from 'phosphor-react'
 import { CustomPreviewCardForm } from './CustomPreviewCardForm'
 import { api } from '@/lib/axios'
+import { useRouter } from 'next/router'
 
 interface CustomStepProps {
   navigateTo: (step: 'describeStep' | 'socialStep' | 'customStep') => void
@@ -34,7 +35,7 @@ const customStepSchema = z.object({
             (files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
             'Only .jpg, .jpeg and .png formats are supported.',
           ),
-  cardColor: z.string(),
+  backgroundColor: z.string(),
   textColor: z.string(),
 })
 
@@ -44,7 +45,7 @@ export function CustomStep({ navigateTo }: CustomStepProps) {
   const customStepForm = useForm<CustomStepInput>({
     resolver: zodResolver(customStepSchema),
     defaultValues: {
-      cardColor: '#000000',
+      backgroundColor: '#000000',
       textColor: '#FFFFFF',
     },
   })
@@ -53,9 +54,12 @@ export function CustomStep({ navigateTo }: CustomStepProps) {
     handleSubmit,
     formState: { isSubmitting },
   } = customStepForm
+  const router = useRouter()
 
   async function handleSubmitSocial(data: CustomStepInput) {
     try {
+      const { backgroundColor, textColor, logoImage } = data
+
       const describeUserInfo = localStorage.getItem('@generateCard:register')
       if (!describeUserInfo) {
         return
@@ -63,7 +67,7 @@ export function CustomStep({ navigateTo }: CustomStepProps) {
 
       const describeUserInfoParsed = JSON.parse(describeUserInfo)
       const formData = new FormData()
-      formData.append('file', data.logoImage?.[0])
+      formData.append('file', logoImage?.[0])
       formData.append('upload_preset', 'card-qrcode')
 
       const response = await fetch(
@@ -78,7 +82,11 @@ export function CustomStep({ navigateTo }: CustomStepProps) {
       await api.post('/users/register', {
         ...describeUserInfoParsed,
         imageUrl: uploadedImage.url,
+        cardBackgroundColor: backgroundColor,
+        cardTextColor: textColor,
       })
+
+      router.push(`/cards/${describeUserInfoParsed.username}`)
     } catch (error) {
       console.log(error)
       // TODO: implement a toast component for report the error

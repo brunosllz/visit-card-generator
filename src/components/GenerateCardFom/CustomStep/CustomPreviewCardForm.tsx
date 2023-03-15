@@ -9,7 +9,7 @@ import { UploadSimple } from 'phosphor-react'
 export function CustomPreviewCardForm() {
   const { register, watch, control } = useFormContext()
 
-  const cardColor: string = watch('cardColor')
+  const backgroundColor: string = watch('backgroundColor')
   const textColor: string = watch('textColor')
 
   return (
@@ -38,11 +38,11 @@ export function CustomPreviewCardForm() {
               <TextInput.Input
                 type="color"
                 className="cursor-pointer focus:outline-none bg-transparent"
-                {...register('cardColor')}
+                {...register('backgroundColor')}
               />
             </TextInput.Root>
             <div className="min-w-[130px] flex justify-center">
-              <span className="uppercase">{cardColor}</span>
+              <span className="uppercase">{backgroundColor}</span>
             </div>
           </div>
         </label>
@@ -52,7 +52,7 @@ export function CustomPreviewCardForm() {
           <ToggleGroupButton control={control} {...register('textColor')} />
         </label>
       </div>
-      <CardPreview cardColor={cardColor} textColor={textColor} />
+      <CardPreview cardColor={backgroundColor} textColor={textColor} />
     </div>
   )
 }

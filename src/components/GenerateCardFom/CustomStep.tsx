@@ -1,60 +1,44 @@
 import { useForm } from 'react-hook-form'
-import { invert } from 'polished'
 import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 import { Button } from '../Button'
 import { MultiStep } from '../MultiStep'
 import { TextInput } from '../TextInput'
-import * as ToggleGroup from '@radix-ui/react-toggle-group'
+import { ToggleGroupButton } from '../ToggleGroupButton'
+import { CardPreview } from '../CardPreview'
 
 import { ArrowRight, UploadSimple } from 'phosphor-react'
-import QrCodeImage from '../../assets/qr-code.svg'
-import Image from 'next/image'
 
 interface CustomStepProps {
   navigateTo: (step: 'describeStep' | 'socialStep' | 'customStep') => void
 }
 
+const customStepSchema = z.object({
+  cardColor: z.string(),
+  textColor: z.string(),
+})
+
+type CustomStepInput = z.infer<typeof customStepSchema>
+
 export function CustomStep({ navigateTo }: CustomStepProps) {
-  const { register, handleSubmit, watch } = useForm({
+  const { register, handleSubmit, watch, control } = useForm<CustomStepInput>({
+    resolver: zodResolver(customStepSchema),
     defaultValues: {
-      color: '#000000',
+      cardColor: '#000000',
     },
   })
 
-  function handleSubmitSocial(data: any) {
+  function handleSubmitSocial(data: CustomStepInput) {
     const describeInfo = localStorage.getItem('@generateCard:register')
-
-    const { email, github, linkedin } = data
-
-    if (describeInfo) {
-      const describeInfoParse: {
-        username: string
-        name: string
-        description: string
-      } = JSON.parse(describeInfo)
-
-      const card = {
-        email,
-        github,
-        linkedin,
-        ...describeInfoParse,
-      }
-
-      localStorage.setItem('@generateCard:register', JSON.stringify(card))
-
-      navigateTo('customStep')
-    }
   }
 
   function handleGoBack() {
     navigateTo('socialStep')
   }
 
-  const colorInput: string = watch('color')
-  // console.log(invert(colorInput))
-
-  console.log(colorInput)
+  const cardColor: string = watch('cardColor')
+  const textColor: string = watch('textColor')
 
   return (
     <form
@@ -94,53 +78,21 @@ export function CustomStep({ navigateTo }: CustomStepProps) {
                   <TextInput.Input
                     type="color"
                     className="cursor-pointer focus:outline-none bg-transparent"
-                    {...register('color')}
+                    {...register('cardColor')}
                   />
                 </TextInput.Root>
                 <div className="min-w-[130px] flex justify-center">
-                  <span className="uppercase">{colorInput}</span>
+                  <span className="uppercase">{cardColor}</span>
                 </div>
               </div>
             </label>
 
             <label className="flex flex-col gap-2">
               Text color
-              <ToggleGroup.Root
-                type="single"
-                className="bg-zinc-900 flex items-center gap-1 rounded-md"
-              >
-                <ToggleGroup.Item
-                  value="#000000"
-                  className="p-2 w-full data-[state=on]:bg-zinc-500 rounded-md transition-colors"
-                >
-                  Black
-                </ToggleGroup.Item>
-                <ToggleGroup.Item
-                  value="#FFFFFF"
-                  defaultChecked={true}
-                  className="p-2 w-full  data-[state=on]:bg-zinc-500 rounded-md transition-colors"
-                >
-                  White
-                </ToggleGroup.Item>
-              </ToggleGroup.Root>
+              <ToggleGroupButton control={control} {...register('textColor')} />
             </label>
           </div>
-          <div
-            className="flex flex-col items-center justify-between w-full h-[297px] p-6 rounded-md"
-            style={{ backgroundColor: colorInput }}
-          >
-            <div className="flex flex-col gap-3 items-center">
-              <div
-                className="p-3 rounded-md"
-                style={{ backgroundColor: invert(colorInput) }}
-              >
-                😊
-              </div>
-              <span className="text-lg">Your name</span>
-            </div>
-
-            <Image src={QrCodeImage} width={80} height={80} alt="qrcode" />
-          </div>
+          <CardPreview cardColor={cardColor} textColor={textColor} />
         </div>
 
         <div className="flex gap-2">

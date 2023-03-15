@@ -10,6 +10,8 @@ const registerBodySchema = z.object({
   github: z.string(),
   linkedin: z.string(),
   imageUrl: z.string(),
+  cardBackgroundColor: z.string(),
+  cardTextColor: z.string(),
 })
 
 export default async function handler(
@@ -27,7 +29,17 @@ export default async function handler(
   }
 
   const {
-    data: { description, email, github, imageUrl, linkedin, name, username },
+    data: {
+      description,
+      email,
+      github,
+      imageUrl,
+      linkedin,
+      name,
+      username,
+      cardBackgroundColor,
+      cardTextColor,
+    },
   } = registerBody
 
   const userExists = await prisma.user.findUnique({
@@ -45,10 +57,12 @@ export default async function handler(
       description,
       email,
       github,
-      image_url: imageUrl,
       linkedin,
       name,
       username,
+      image_url: imageUrl,
+      card_background_color: cardBackgroundColor,
+      card_text_color: cardTextColor,
     },
   })
 

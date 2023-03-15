@@ -27,7 +27,7 @@ export function CardPreview({ cardColor, textColor }: CardPreviewProps) {
         </span>
       </div>
 
-      <Image src={QrCodeImage} width={80} height={80} alt="qrcode" />
+      <Image src={QrCodeImage} width={80} height={80} alt="qrcode" priority />
     </div>
   )
 }

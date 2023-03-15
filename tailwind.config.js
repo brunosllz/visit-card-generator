@@ -12,6 +12,9 @@ module.exports = {
       fontFamily: {
         sans: ['Roboto', 'san-serif'],
       },
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+      },
     },
   },
   plugins: [],

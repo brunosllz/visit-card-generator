@@ -53,7 +53,7 @@ export function SocialStep({ navigateTo }: SocialStepProps) {
   })
 
   function handleSubmitSocial(data: SocialStepInput) {
-    const describeInfo = localStorage.getItem('@generateCard:register')
+    const describeInfo = sessionStorage.getItem('@generateCard:register')
 
     const { email, github, linkedin } = data
 
@@ -71,7 +71,7 @@ export function SocialStep({ navigateTo }: SocialStepProps) {
         ...describeInfoParse,
       }
 
-      localStorage.setItem('@generateCard:register', JSON.stringify(card))
+      sessionStorage.setItem('@generateCard:register', JSON.stringify(card))
 
       navigateTo('customStep')
     }
@@ -82,7 +82,7 @@ export function SocialStep({ navigateTo }: SocialStepProps) {
   }
 
   useEffect(() => {
-    const hasRegisterInfo = localStorage.getItem('@generateCard:register')
+    const hasRegisterInfo = sessionStorage.getItem('@generateCard:register')
 
     if (hasRegisterInfo) {
       const registerInfo = JSON.parse(hasRegisterInfo)

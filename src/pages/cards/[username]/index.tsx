@@ -2,12 +2,16 @@ import { useRef } from 'react'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { prisma } from '@/lib/prisma'
 import html2canvas from 'html2canvas'
+import { useRouter } from 'next/router'
+import { replaceSpaceToDash } from '@/utils/replaceSpaceToDash'
 
+import { Button } from '@/components/Button'
 import QRCode from 'react-qr-code'
 import Image from 'next/image'
 import Link from 'next/link'
+import { toast } from 'react-toastify'
 
-import { Download } from 'phosphor-react'
+import { ArrowRight, Download } from 'phosphor-react'
 
 interface CardProps {
   user: {
@@ -27,37 +31,60 @@ interface CardProps {
 export default function Card({ user }: CardProps) {
   const BACKGROUND_COLOR = user.card_background_color
   const TEXT_COLOR = user.card_text_color
+  const router = useRouter()
 
   const cardRef = useRef<HTMLDivElement | null>(null)
+
+  async function handleNavigateToUserPage() {
+    await router.push(
+      `http://localhost:3000/${user.id}/${replaceSpaceToDash(user.name)}`,
+    )
+  }
 
   function handleDownloadCard() {
     if (!cardRef.current) {
       return
     }
-
-    html2canvas(cardRef.current, {
-      allowTaint: true,
-      backgroundColor: BACKGROUND_COLOR,
-      removeContainer: true,
-    }).then((canvas) => {
-      canvas.style.display = 'none'
-      const image = canvas.toDataURL('png')
-      const a = document.createElement('a')
-      a.setAttribute('download', `${user.name}-card.png`)
-      a.setAttribute('href', image)
-      a.click()
-    })
+    try {
+      html2canvas(cardRef.current, {
+        allowTaint: true,
+        backgroundColor: BACKGROUND_COLOR,
+        removeContainer: true,
+      }).then((canvas) => {
+        canvas.style.display = 'none'
+        const image = canvas.toDataURL('png')
+        const a = document.createElement('a')
+        a.setAttribute('download', `${user.name}-card.png`)
+        a.setAttribute('href', image)
+        a.click()
+      })
+    } catch (_) {
+      toast(
+        'Ocorreu um problema ao fazer o download do cartão, tente novamente mais tarde!',
+      )
+    }
   }
 
   return (
     <div className="bg-gradient-radial from-zinc-900/95 to-zinc-900 w-full h-screen flex flex-col gap-4 justify-center items-center">
-      <div className="flex justify-end w-[400px]">
-        <button
+      <div className="flex gap-2 w-[400px]">
+        <Button
+          title="Download card"
+          size="sm"
           onClick={handleDownloadCard}
-          className="flex py-2 px-3 items-center justify-center gap-2 rounded-md text-sm bg-green-700 first-line:"
+          className="max-w-[200px]"
         >
-          Download card <Download weight="bold" size={18} />{' '}
-        </button>
+          <Download weight="bold" size={18} />
+        </Button>
+        <Button
+          title="Navigate to page"
+          size="sm"
+          variant="secondary"
+          onClick={handleNavigateToUserPage}
+          className="max-w-[200px]"
+        >
+          <ArrowRight weight="bold" size={18} />
+        </Button>
       </div>
 
       <div
@@ -92,16 +119,14 @@ export default function Card({ user }: CardProps) {
 
           <Link
             target="_blank"
-            href={`http://localhost:3000/${user.id}/${user.name.replace(
-              /\s/g,
-              '-',
+            href={`http://localhost:3000/${user.id}/${replaceSpaceToDash(
+              user.name,
             )}`}
             className="w-[180px] h-[180px] bg-white p-2 rounded-md"
           >
             <QRCode
-              value={`http://localhost:3000/${user.id}/${user.name.replace(
-                /\s/g,
-                '-',
+              value={`http://localhost:3000/${user.id}/${replaceSpaceToDash(
+                user.name,
               )}`}
               className="w-full h-full"
             />

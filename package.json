@@ -21,7 +21,7 @@
     "clsx": "^1.2.1",
     "eslint": "8.36.0",
     "eslint-config-next": "13.2.4",
-    "html-to-image": "^1.11.11",
+    "html2canvas": "^1.4.1",
     "next": "13.2.4",
     "phosphor-react": "^1.4.1",
     "polished": "^4.2.2",

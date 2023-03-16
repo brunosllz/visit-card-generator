@@ -7,6 +7,7 @@ import { TextInput } from '../TextInput'
 
 import { ArrowRight } from 'phosphor-react'
 import { z } from 'zod'
+import { useEffect } from 'react'
 
 const socialStepSchema = z.object({
   email: z
@@ -45,6 +46,7 @@ export function SocialStep({ navigateTo }: SocialStepProps) {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<SocialStepInput>({
     resolver: zodResolver(socialStepSchema),
@@ -78,6 +80,18 @@ export function SocialStep({ navigateTo }: SocialStepProps) {
   function handleGoBack() {
     navigateTo('describeStep')
   }
+
+  useEffect(() => {
+    const hasRegisterInfo = localStorage.getItem('@generateCard:register')
+
+    if (hasRegisterInfo) {
+      const registerInfo = JSON.parse(hasRegisterInfo)
+
+      setValue('email', registerInfo.email)
+      setValue('github', registerInfo.github)
+      setValue('linkedin', registerInfo.linkedin)
+    }
+  }, [setValue])
 
   return (
     <form

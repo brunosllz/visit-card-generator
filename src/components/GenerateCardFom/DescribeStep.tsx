@@ -13,9 +13,14 @@ interface DescribeStepProps {
 }
 
 const describeStepSchema = z.object({
-  username: z.string().refine((username) => username.trim().length > 0, {
-    message: 'Você deve informar o username.',
-  }),
+  username: z
+    .string()
+    .regex(/^([a-z\d\-]+)$/i, {
+      message: "O username deve conter letras e numeros e separação por '-'.",
+    })
+    .refine((username) => username.trim().length > 0, {
+      message: 'Você deve informar o username.',
+    }),
   name: z.string().refine((fullName) => fullName.trim().length > 0, {
     message: 'Você deve informar o nome completo.',
   }),

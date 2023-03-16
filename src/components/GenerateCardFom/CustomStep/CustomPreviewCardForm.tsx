@@ -11,6 +11,12 @@ export function CustomPreviewCardForm() {
 
   const backgroundColor: string = watch('backgroundColor')
   const textColor: string = watch('textColor')
+  const logoImage: string = watch('logoImage')
+  let hasFileOnInput: boolean = false
+
+  if (logoImage) {
+    hasFileOnInput = logoImage.length > 0
+  }
 
   return (
     <div className="grid grid-cols-2 gap-4">
@@ -25,9 +31,22 @@ export function CustomPreviewCardForm() {
               {...register('logoImage')}
             />
           </TextInput.Root>
-          <div className="absolute flex items-center gap-2 bottom-3 left-5 cursor-pointer">
-            <UploadSimple size={20} weight="bold" />
-            <span>Choice our logo image</span>
+          <div className="absolute flex items-center gap-2 bottom-3 left-4 cursor-pointer">
+            {hasFileOnInput ? (
+              <>
+                <UploadSimple
+                  size={20}
+                  weight="bold"
+                  className="text-green-600"
+                />
+                <span className="text-sm">Choice another image</span>
+              </>
+            ) : (
+              <>
+                <UploadSimple size={20} weight="bold" />
+                <span className="text-sm">Choice our logo image</span>
+              </>
+            )}
           </div>
         </label>
 

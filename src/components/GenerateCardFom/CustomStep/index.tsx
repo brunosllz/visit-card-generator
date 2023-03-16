@@ -1,14 +1,15 @@
 import { useForm, FormProvider } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/router'
+import { api } from '@/lib/axios'
 
 import { Button } from '@/components/Button'
 import { MultiStep } from '@/components/MultiStep'
+import { CustomPreviewCardForm } from './CustomPreviewCardForm'
+import { toast } from 'react-toastify'
 
 import { ArrowRight } from 'phosphor-react'
-import { CustomPreviewCardForm } from './CustomPreviewCardForm'
-import { api } from '@/lib/axios'
-import { useRouter } from 'next/router'
 
 interface CustomStepProps {
   navigateTo: (step: 'describeStep' | 'socialStep' | 'customStep') => void
@@ -27,16 +28,46 @@ const customStepSchema = z.object({
       ? z.any()
       : z
           .instanceof(FileList)
-          .refine(
-            (files) => files?.[0]?.size <= MAX_FILE_SIZE,
-            `Max image size is 400KB.`,
-          )
-          .refine(
-            (files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
-            'Only .jpg, .jpeg and .png formats are supported.',
-          ),
-  backgroundColor: z.string(),
-  textColor: z.string(),
+          .nullable()
+          .superRefine((files, ctx) => {
+            if (files) {
+              const hasFile = files?.length > 0
+
+              if (!hasFile) {
+                return null
+              }
+
+              const isValidSize = files?.[0]?.size <= MAX_FILE_SIZE
+              const isValidFormat = ACCEPTED_IMAGE_TYPES.includes(
+                files?.[0]?.type,
+              )
+
+              if (!isValidSize) {
+                ctx.addIssue({
+                  code: z.ZodIssueCode.custom,
+                  message: 'Max image size is 400KB.',
+                  fatal: true,
+                })
+              }
+
+              if (!isValidFormat) {
+                ctx.addIssue({
+                  code: z.ZodIssueCode.custom,
+                  message: 'Only .jpg, .jpeg and .png formats are supported.',
+                  fatal: true,
+                })
+              }
+            }
+          }),
+  backgroundColor: z
+    .string()
+    .transform((backgroundColor) => backgroundColor.toUpperCase()),
+  textColor: z
+    .string()
+    .transform((textColor) => textColor.toUpperCase())
+    .refine((description) => description.trim().length > 0, {
+      message: 'Você deve informar a cor do texto.',
+    }),
 })
 
 export type CustomStepInput = z.infer<typeof customStepSchema>
@@ -60,42 +91,56 @@ export function CustomStep({ navigateTo }: CustomStepProps) {
     try {
       const { backgroundColor, textColor, logoImage } = data
 
-      const describeUserInfo = localStorage.getItem('@generateCard:register')
+      const describeUserInfo = sessionStorage.getItem('@generateCard:register')
       if (!describeUserInfo) {
         return
       }
 
+      const hasImageFile = logoImage.length > 0
       const describeUserInfoParsed = JSON.parse(describeUserInfo)
-      const formData = new FormData()
-      formData.append('file', logoImage?.[0])
-      formData.append('upload_preset', 'card-qrcode')
+      let uploadedImage: UploadedImage | null = null
 
-      const response = await fetch(
-        'https://api.cloudinary.com/v1_1/dhexs29hy/image/upload',
-        {
-          method: 'POST',
-          body: formData,
-        },
-      )
-      const uploadedImage: UploadedImage = await response.json()
+      if (hasImageFile) {
+        const formData = new FormData()
+        formData.append('file', logoImage?.[0])
+        formData.append('upload_preset', 'card-qrcode')
+
+        const response = await fetch(
+          'https://api.cloudinary.com/v1_1/dhexs29hy/image/upload',
+          {
+            method: 'POST',
+            body: formData,
+          },
+        )
+
+        uploadedImage = await response.json()
+      }
 
       await api.post('/users/register', {
         ...describeUserInfoParsed,
-        imageUrl: uploadedImage.url,
+        imageUrl: uploadedImage ? uploadedImage.url : null,
         cardBackgroundColor: backgroundColor,
         cardTextColor: textColor,
       })
 
-      router.push(`/cards/${describeUserInfoParsed.username}`)
+      sessionStorage.removeItem('@generateCard:register')
+      await router.push(`/cards/${describeUserInfoParsed.username}`)
     } catch (error) {
       console.log(error)
-      // TODO: implement a toast component for report the error
+
+      toast(
+        'Ocorreu um problema ao criar o seu cartão, tente no novamente mais tarde!',
+        {
+          type: 'error',
+        },
+      )
     }
   }
 
   function handleGoBack() {
     navigateTo('socialStep')
   }
+
   return (
     <div className="bg-zinc-800 max-w-[546px] w-full mx-auto p-9 rounded-md flex flex-col gap-6">
       <div className="flex flex-col gap-2">

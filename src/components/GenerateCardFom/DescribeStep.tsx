@@ -8,6 +8,8 @@ import { Button } from '../Button'
 
 import { ArrowRight } from 'phosphor-react'
 import { useEffect } from 'react'
+import { api } from '@/lib/axios'
+import { toast } from 'react-toastify'
 
 interface DescribeStepProps {
   navigateTo: (step: 'describeStep' | 'socialStep' | 'customStep') => void
@@ -39,20 +41,30 @@ export function DescribeStep({ navigateTo }: DescribeStepProps) {
     register,
     handleSubmit,
     setValue,
-    formState: { errors },
+    setFocus,
+    formState: { errors, isSubmitting },
   } = useForm<DescribeStepInput>({
     resolver: zodResolver(describeStepSchema),
   })
 
-  function handleSubmitDescribe(data: DescribeStepInput) {
-    const describeInfo = JSON.stringify(data)
-    localStorage.setItem('@generateCard:register', describeInfo)
+  async function handleSubmitDescribe(data: DescribeStepInput) {
+    try {
+      await api.get(`/users/${data.username}`)
 
-    navigateTo('socialStep')
+      const describeInfo = JSON.stringify(data)
+      sessionStorage.setItem('@generateCard:register', describeInfo)
+
+      navigateTo('socialStep')
+    } catch (error) {
+      toast('Username already registered', {
+        type: 'error',
+      })
+      setFocus('username')
+    }
   }
 
   useEffect(() => {
-    const hasDescribeInfo = localStorage.getItem('@generateCard:register')
+    const hasDescribeInfo = sessionStorage.getItem('@generateCard:register')
 
     if (hasDescribeInfo) {
       const DescribeInfoParsed = JSON.parse(hasDescribeInfo)
@@ -113,7 +125,12 @@ export function DescribeStep({ navigateTo }: DescribeStepProps) {
           />
         </label>
 
-        <Button title="Next" type="submit">
+        <Button
+          title="Next"
+          type="submit"
+          isLoading={isSubmitting}
+          disabled={isSubmitting}
+        >
           <ArrowRight weight="bold" />
         </Button>
       </div>

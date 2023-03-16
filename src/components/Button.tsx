@@ -7,24 +7,35 @@ interface ButtonProps extends ComponentPropsWithoutRef<'button'> {
   title: string
   children?: ReactNode
   variant?: 'primary' | 'secondary'
+  size?: 'default' | 'sm'
   isLoading?: Boolean
+  className?: string
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
-    { title, children, isLoading, variant = 'primary', ...props }: ButtonProps,
+    {
+      title,
+      children,
+      isLoading,
+      variant = 'primary',
+      size = 'default',
+      className,
+      ...props
+    }: ButtonProps,
     ref,
   ) => {
     return (
       <button
         ref={ref}
         className={clsx(
-          'text-sm rounded-md py-4 flex h-12 gap-2 justify-center items-center w-full min-w-[120px] transition-colors',
+          `${className} text-sm rounded-md py-4 flex h-12 gap-2 justify-center items-center w-full min-w-[120px] transition-colors`,
           {
-            'bg-green-600  hover:bg-green-500 disabled:bg-green-700 disabled:cursor-not-allowed':
+            'bg-green-700  hover:bg-green-600 disabled:bg-green-800 disabled:opacity-85 disabled:cursor-not-allowed':
               variant === 'primary',
 
             'bg-transparent hover:bg-gray-600': variant === 'secondary',
+            'h-[38px]': size === 'sm',
           },
         )}
         {...props}

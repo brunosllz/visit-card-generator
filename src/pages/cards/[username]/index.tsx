@@ -1,7 +1,9 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { prisma } from '@/lib/prisma'
-import Image from 'next/image'
+
 import QRCode from 'react-qr-code'
+import Image from 'next/image'
+import Link from 'next/link'
 
 interface CardProps {
   user: {
@@ -11,34 +13,59 @@ interface CardProps {
     username: string
     linkedin: string
     github: string
-    image_url: string
+    image_url: string | null
     description: string
+    card_background_color: string
+    card_text_color: string
   }
 }
 
 export default function Card({ user }: CardProps) {
+  const BACKGROUND_COLOR = user.card_background_color
+  const TEXT_COLOR = user.card_text_color
+
   return (
     <div className="bg-gradient-radial from-zinc-900/95 to-zinc-900 w-full h-screen flex justify-center items-center">
       <div
-        className={`bg-gradient-radial w-[400px] h-[600px] bg-black justify-between items-center mx-auto p-10 rounded-md flex flex-col gap-6 shadow-lg shadow-black/40`}
+        className={`w-[400px] h-[600px] justify-between items-center mx-auto p-11 rounded-md flex flex-col gap-6 shadow-lg shadow-black/40`}
+        style={{ backgroundColor: BACKGROUND_COLOR }}
       >
         <div className="flex flex-col gap-6 items-center">
-          <Image
-            src={user.image_url}
-            alt={user.username}
-            width={90}
-            height={90}
-          />
+          {user.image_url && (
+            <Image
+              className="rounded-md"
+              src={user.image_url}
+              alt={user.username}
+              width={90}
+              height={90}
+              quality={100}
+            />
+          )}
 
-          <span className="text-2xl capitalize">{user.name}</span>
+          <span
+            className="text-2xl capitalize font-medium"
+            style={{ color: TEXT_COLOR }}
+          >
+            {user.name}
+          </span>
         </div>
 
-        <div className="w-[180px] h-[180px] bg-white p-2 rounded-md">
+        <Link
+          target="_blank"
+          href={`http://localhost:3000/${user.id}/${user.name.replace(
+            /\s/g,
+            '-',
+          )}`}
+          className="w-[180px] h-[180px] bg-white p-2 rounded-md"
+        >
           <QRCode
-            value={`localhost:3000/${user.id}/${user.name.replace(' ', '-')}`}
+            value={`http://localhost:3000/${user.id}/${user.name.replace(
+              /\s/g,
+              '-',
+            )}`}
             className="w-full h-full"
           />
-        </div>
+        </Link>
       </div>
     </div>
   )
@@ -65,6 +92,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       linkedin: true,
       description: true,
       image_url: true,
+      card_background_color: true,
+      card_text_color: true,
     },
   })
 

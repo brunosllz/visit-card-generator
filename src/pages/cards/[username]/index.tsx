@@ -39,6 +39,8 @@ export default function Card({ user }: CardProps) {
               width={90}
               height={90}
               quality={100}
+              placeholder="blur"
+              blurDataURL="https://res.cloudinary.com/dhexs29hy/image/upload/v1678970237/image_4_rv8dpo.png"
             />
           )}
 

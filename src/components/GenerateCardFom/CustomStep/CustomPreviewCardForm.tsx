@@ -47,10 +47,7 @@ export function CustomPreviewCardForm() {
           </div>
         </label>
 
-        <label className="flex flex-col gap-2">
-          Text color
-          <ToggleGroupButton control={control} {...register('textColor')} />
-        </label>
+        <ToggleGroupButton control={control} {...register('textColor')} />
       </div>
       <CardPreview cardColor={backgroundColor} textColor={textColor} />
     </div>

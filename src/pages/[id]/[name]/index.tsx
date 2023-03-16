@@ -1,7 +1,10 @@
 import { prisma } from '@/lib/prisma'
 import { GetStaticPaths, GetStaticProps } from 'next'
+
 import Image from 'next/image'
 import Link from 'next/link'
+
+import { Envelope, GithubLogo, LinkedinLogo } from 'phosphor-react'
 
 interface UserPageProps {
   user: {
@@ -42,22 +45,25 @@ export default function UserPage({ user }: UserPageProps) {
           <Link
             href="bruno.luiz@email.com"
             target="_blank"
-            className="text-sm bg-blue-600 rounded-md py-4 flex h-12 gap-2 justify-center items-center w-full transition-colors"
+            className="text-sm bg-red-600 outline-none hover:bg-red-500 transition-colors rounded-md py-4 flex h-12 gap-2 justify-center items-center w-full focus:ring-1 focus:ring-red-600 focus:ring-offset-1 focus:ring-offset-zinc-800"
           >
+            <Envelope weight="bold" size={18} />
             Email
           </Link>
           <Link
             href={`https://www.github.com/${user.github}`}
             target="_blank"
-            className="text-sm bg-blue-600 rounded-md py-4 flex h-12 gap-2 justify-center items-center w-full transition-colors"
+            className="text-sm bg-black hover:bg-black/70 transition-colors rounded-md py-4 flex h-12 gap-2 justify-center items-center w-full focus:ring-1 outline-none focus:ring-black focus:ring-offset-1 focus:ring-offset-zinc-800"
           >
+            <GithubLogo weight="bold" size={18} />
             Github
           </Link>
           <Link
             href={`https://www.linkedin.com/in/${user.linkedin}`}
             target="_blank"
-            className="text-sm bg-blue-600 rounded-md py-4 flex h-12 gap-2 justify-center items-center w-full transition-colors"
+            className="text-sm bg-blue-600 hover:bg-blue-500 transition-colors rounded-md py-4 flex h-12 gap-2 justify-center items-center w-full outline-none focus:ring-1 focus:ring-blue-600 focus:ring-offset-1 focus:ring-offset-zinc-800"
           >
+            <LinkedinLogo weight="bold" size={18} />
             Linkedin
           </Link>
         </div>

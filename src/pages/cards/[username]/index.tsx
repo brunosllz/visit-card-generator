@@ -1,9 +1,13 @@
+import { useRef } from 'react'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { prisma } from '@/lib/prisma'
+import html2canvas from 'html2canvas'
 
 import QRCode from 'react-qr-code'
 import Image from 'next/image'
 import Link from 'next/link'
+
+import { Download } from 'phosphor-react'
 
 interface CardProps {
   user: {
@@ -24,50 +28,85 @@ export default function Card({ user }: CardProps) {
   const BACKGROUND_COLOR = user.card_background_color
   const TEXT_COLOR = user.card_text_color
 
+  const cardRef = useRef<HTMLDivElement | null>(null)
+
+  function handleDownloadCard() {
+    if (!cardRef.current) {
+      return
+    }
+
+    html2canvas(cardRef.current, {
+      allowTaint: true,
+      backgroundColor: BACKGROUND_COLOR,
+      removeContainer: true,
+    }).then((canvas) => {
+      canvas.style.display = 'none'
+      const image = canvas.toDataURL('png')
+      const a = document.createElement('a')
+      a.setAttribute('download', `${user.name}-card.png`)
+      a.setAttribute('href', image)
+      a.click()
+    })
+  }
+
   return (
-    <div className="bg-gradient-radial from-zinc-900/95 to-zinc-900 w-full h-screen flex justify-center items-center">
+    <div className="bg-gradient-radial from-zinc-900/95 to-zinc-900 w-full h-screen flex flex-col gap-4 justify-center items-center">
+      <div className="flex justify-end w-[400px]">
+        <button
+          onClick={handleDownloadCard}
+          className="flex py-2 px-3 items-center justify-center gap-2 rounded-md text-sm bg-green-700 first-line:"
+        >
+          Download card <Download weight="bold" size={18} />{' '}
+        </button>
+      </div>
+
       <div
-        className={`w-[400px] h-[600px] justify-between items-center mx-auto p-11 rounded-md flex flex-col gap-6 shadow-lg shadow-black/40`}
+        className={`w-[400px] h-[600px] mx-auto rounded-md flex flex-col overflow-hidden shadow-lg shadow-black/40`}
         style={{ backgroundColor: BACKGROUND_COLOR }}
       >
-        <div className="flex flex-col gap-6 items-center">
-          {user.image_url && (
-            <Image
-              className="rounded-md"
-              src={user.image_url}
-              alt={user.username}
-              width={90}
-              height={90}
-              quality={100}
-              placeholder="blur"
-              blurDataURL="https://res.cloudinary.com/dhexs29hy/image/upload/v1678970237/image_4_rv8dpo.png"
-            />
-          )}
-
-          <span
-            className="text-2xl capitalize font-medium"
-            style={{ color: TEXT_COLOR }}
-          >
-            {user.name}
-          </span>
-        </div>
-
-        <Link
-          target="_blank"
-          href={`http://localhost:3000/${user.id}/${user.name.replace(
-            /\s/g,
-            '-',
-          )}`}
-          className="w-[180px] h-[180px] bg-white p-2 rounded-md"
+        <div
+          ref={cardRef}
+          className="flex flex-col w-full h-full p-11 gap-6 justify-between items-center"
         >
-          <QRCode
-            value={`http://localhost:3000/${user.id}/${user.name.replace(
+          <div className="flex flex-col gap-6 items-center">
+            {user.image_url && (
+              <Image
+                className="rounded-md"
+                src={user.image_url}
+                alt={user.username}
+                width={90}
+                height={90}
+                quality={100}
+                placeholder="blur"
+                blurDataURL="https://res.cloudinary.com/dhexs29hy/image/upload/v1678970237/image_4_rv8dpo.png"
+              />
+            )}
+
+            <span
+              className="text-2xl capitalize font-medium"
+              style={{ color: TEXT_COLOR }}
+            >
+              {user.name}
+            </span>
+          </div>
+
+          <Link
+            target="_blank"
+            href={`http://localhost:3000/${user.id}/${user.name.replace(
               /\s/g,
               '-',
             )}`}
-            className="w-full h-full"
-          />
-        </Link>
+            className="w-[180px] h-[180px] bg-white p-2 rounded-md"
+          >
+            <QRCode
+              value={`http://localhost:3000/${user.id}/${user.name.replace(
+                /\s/g,
+                '-',
+              )}`}
+              className="w-full h-full"
+            />
+          </Link>
+        </div>
       </div>
     </div>
   )

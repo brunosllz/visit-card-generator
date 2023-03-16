@@ -5,9 +5,19 @@
   - [x] etapa 2: definir media de contato;
   - [x] etapa 3: defnir customização (cor, logo, ...);
 - [x] Persistir as cores do cartão no banco;
-- [ ] Adicionar fallback para a imagem do card;
-- [ ] Adicionar validação nos inputs de colores;
-- [ ] Adicionar validação nos inputs de linkedin e github;
-- [ ] Implementar um componente de toast;
+- [x] Adicionar pagina de contatos do usuário;
+- [x] Adicionar validação nos inputs de colores;
+- [x] Verificar possivel erro que pode ocorrer quando fazer o submit do form sem marcar a cor do texto 
+- [x] Ajustar validação do username não está aceitando numero;
+- [x] Adicionar validação nos inputs de linkedin e github;
+- [x] Implementar um componente de toast;
+- [x] Adicionar fallback para a imagem do card;
 - [ ] Verificar e tratar os erros das ações do usuário;
-- [ ] Ajustar o botão de upload (colocar uma animação, icone, algo mostre visualmente que a ação foi realizada);
+- [x] Ajustar escape da paleta de cores(era problema de estar clicando na area do placeholder);
+- [ ] Adicionar funcionalidade de download do cartão;
+- [x] Ajustar o botão de upload (colocar uma animação, icone, algo mostre visualmente que a ação foi realizada);
+- [ ] Criar notificação para quando o usuário está sem internet;
+- [ ] Criar componente de Box;
+- [ ] Tratar os diferentes erros do submit do formulario (sem conexão, erros genericos, nome de usuário existente);
+- [ ] Deixar o erros que vem do zod mais amigaveis;
+- [ ] Adionar o preenchimento dos campos se o usuário voltar a página;

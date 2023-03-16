@@ -28,26 +28,24 @@ export const ToggleGroupButton = forwardRef<
           <ToggleGroup.Root
             id={name}
             type="single"
-            className="flex flex-col items-center gap-1 rounded-md overflow-hidden"
+            className="flex items-center rounded-md outline-none"
             defaultValue="#FFFFFF"
             value={value}
             onValueChange={onChange}
           >
-            <div className="flex w-full">
-              <ToggleGroup.Item
-                value="#000000"
-                className="p-2 w-full data-[state=on]:bg-zinc-500  transition-colors bg-zinc-900"
-              >
-                Black
-              </ToggleGroup.Item>
-              <ToggleGroup.Item
-                value="#FFFFFF"
-                defaultChecked={true}
-                className="p-2 w-full  data-[state=on]:bg-zinc-500  transition-colors bg-zinc-900"
-              >
-                White
-              </ToggleGroup.Item>
-            </div>
+            <ToggleGroup.Item
+              value="#000000"
+              className="p-2 w-full data-[state=on]:bg-zinc-500 rounded-tl rounded-bl transition-colors outline-none bg-zinc-900 focus:z-10 focus:ring-1 focus:ring-green-600"
+            >
+              Black
+            </ToggleGroup.Item>
+            <ToggleGroup.Item
+              value="#FFFFFF"
+              defaultChecked={true}
+              className="p-2 w-full data-[state=on]:bg-zinc-500 rounded-tr rounded-br transition-colors outline-none bg-zinc-900 focus:z-10 focus:ring-1 focus:ring-green-600"
+            >
+              White
+            </ToggleGroup.Item>
           </ToggleGroup.Root>
         </label>
 

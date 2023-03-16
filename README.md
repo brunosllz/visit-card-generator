@@ -25,3 +25,4 @@
 - [ ] Adicionar variante de size no botão;
 - [ ] Ajustar descrição do formulario;
 - [ ] Colocar as validações do formulario em ingles;
+- [ ] Implementar tratativa de erro no download do card;

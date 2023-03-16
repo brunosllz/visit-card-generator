@@ -3,12 +3,13 @@ import clsx from 'clsx'
 
 export interface TextInputRootProps extends ComponentPropsWithoutRef<'div'> {
   children: ReactNode
+  className?: string
 }
 
 const TextInputRoot = forwardRef<HTMLDivElement, TextInputRootProps>(
-  ({ children }: TextInputRootProps, ref) => {
+  ({ children, className }: TextInputRootProps, ref) => {
     return (
-      <div ref={ref} className="w-full flex flex-col gap-1">
+      <div ref={ref} className={`${className} w-full flex flex-col gap-1`}>
         {children}
       </div>
     )
@@ -20,16 +21,18 @@ TextInputRoot.displayName = 'TextInput.Root'
 interface TextInputProps extends ComponentPropsWithoutRef<'input'> {
   children?: ReactNode
   hasError?: boolean
+  className?: string
 }
 
 const TextInputInput = forwardRef<HTMLInputElement, TextInputProps>(
-  ({ children, hasError, ...props }: TextInputProps, ref) => {
+  ({ children, hasError, className, ...props }: TextInputProps, ref) => {
     return (
       <div
         className={clsx(
-          'flex items-baseline bg-zinc-900 h-12 rounded-md px-4 py-3 min-w-full',
+          `focus-within:ring-0 ${className} flex items-baseline bg-zinc-900 h-12 rounded-md px-4 py-3 min-w-full`,
           {
-            'ring-1 ring-red-500 focus-within:ring-red-500': hasError,
+            'focus-within:ring-red-500': hasError,
+            'focus-within:ring-green-600': !hasError,
           },
         )}
       >

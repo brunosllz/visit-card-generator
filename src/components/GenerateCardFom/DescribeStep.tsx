@@ -7,6 +7,7 @@ import { MultiStep } from '../MultiStep'
 import { Button } from '../Button'
 
 import { ArrowRight } from 'phosphor-react'
+import { useEffect } from 'react'
 
 interface DescribeStepProps {
   navigateTo: (step: 'describeStep' | 'socialStep' | 'customStep') => void
@@ -37,6 +38,7 @@ export function DescribeStep({ navigateTo }: DescribeStepProps) {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<DescribeStepInput>({
     resolver: zodResolver(describeStepSchema),
@@ -48,6 +50,18 @@ export function DescribeStep({ navigateTo }: DescribeStepProps) {
 
     navigateTo('socialStep')
   }
+
+  useEffect(() => {
+    const hasDescribeInfo = localStorage.getItem('@generateCard:register')
+
+    if (hasDescribeInfo) {
+      const DescribeInfoParsed = JSON.parse(hasDescribeInfo)
+
+      setValue('username', DescribeInfoParsed.username)
+      setValue('name', DescribeInfoParsed.name)
+      setValue('description', DescribeInfoParsed.description)
+    }
+  }, [setValue])
 
   return (
     <form

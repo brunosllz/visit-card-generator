@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 import { Button } from '../Button'
 import { MultiStep } from '../MultiStep'
@@ -10,16 +11,28 @@ import { z } from 'zod'
 const socialStepSchema = z.object({
   email: z
     .string()
-    .email()
+    .email({ message: 'Você deve informar um email válido.' })
     .refine((email) => email.trim().length > 0, {
       message: 'Você deve informar o email.',
     }),
-  github: z.string().refine((github) => github.trim().length > 0, {
-    message: 'Você deve informar o nome completo.',
-  }),
-  linkedin: z.string().refine((linkedin) => linkedin.trim().length > 0, {
-    message: 'Você deve informar a descrição.',
-  }),
+  github: z
+    .string()
+    .regex(/^([a-z\d\-]+)$/i, {
+      message:
+        "O usuario do github deve conter letras e numeros e separação por '-'.",
+    })
+    .refine((github) => github.trim().length > 0, {
+      message: 'Você deve informar o nome completo.',
+    }),
+  linkedin: z
+    .string()
+    .regex(/^([a-z\d\-]+)$/i, {
+      message:
+        "O usuario do linkedin deve conter letras e numeros e separação por '-'.",
+    })
+    .refine((linkedin) => linkedin.trim().length > 0, {
+      message: 'Você deve informar a descrição.',
+    }),
 })
 
 type SocialStepInput = z.infer<typeof socialStepSchema>
@@ -29,7 +42,13 @@ interface SocialStepProps {
 }
 
 export function SocialStep({ navigateTo }: SocialStepProps) {
-  const { register, handleSubmit } = useForm<SocialStepInput>({})
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SocialStepInput>({
+    resolver: zodResolver(socialStepSchema),
+  })
 
   function handleSubmitSocial(data: SocialStepInput) {
     const describeInfo = localStorage.getItem('@generateCard:register')
@@ -81,18 +100,25 @@ export function SocialStep({ navigateTo }: SocialStepProps) {
           Email
           <TextInput.Root>
             <TextInput.Input
+              hasError={!!errors.email}
               placeholder="johndoe@email.com"
               {...register('email')}
             />
+            <TextInput.MessageError message={errors.email?.message} />
           </TextInput.Root>
         </label>
 
         <label className="flex flex-col gap-2">
           Github
           <TextInput.Root>
-            <TextInput.Input placeholder="your-user" {...register('github')}>
+            <TextInput.Input
+              placeholder="your-user"
+              hasError={!!errors.github}
+              {...register('github')}
+            >
               <TextInput.Prefix prefix="https://github.com/" />
             </TextInput.Input>
+            <TextInput.MessageError message={errors.github?.message} />
           </TextInput.Root>
         </label>
 
@@ -102,6 +128,7 @@ export function SocialStep({ navigateTo }: SocialStepProps) {
             <TextInput.Input placeholder="your-user" {...register('linkedin')}>
               <TextInput.Prefix prefix="https://www.linkedin.com/in/" />
             </TextInput.Input>
+            <TextInput.MessageError message={errors.linkedin?.message} />
           </TextInput.Root>
         </label>
 

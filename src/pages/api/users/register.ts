@@ -4,12 +4,12 @@ import { z } from 'zod'
 
 const registerBodySchema = z.object({
   name: z.string().transform((name) => name.toLowerCase()),
-  username: z.string(),
+  username: z.string().regex(/^([a-z\d\-]+)$/i),
   description: z.string(),
   email: z.string().email(),
-  github: z.string(),
-  linkedin: z.string(),
-  imageUrl: z.string(),
+  github: z.string().regex(/^([a-z\d\-]+)$/i),
+  linkedin: z.string().regex(/^([a-z\d\-]+)$/i),
+  imageUrl: z.string().nullable(),
   cardBackgroundColor: z.string(),
   cardTextColor: z.string(),
 })
@@ -49,7 +49,7 @@ export default async function handler(
   })
 
   if (userExists) {
-    return response.status(405).json({ message: 'User already exists.' })
+    return response.status(409).json({ message: 'User already exists.' })
   }
 
   const user = await prisma.user.create({

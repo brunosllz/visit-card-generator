@@ -11,28 +11,28 @@ import { useEffect } from 'react'
 
 const socialStepSchema = z.object({
   email: z
-    .string()
-    .email({ message: 'Você deve informar um email válido.' })
+    .string({ required_error: 'YYou need to provide a email.' })
+    .email({ message: 'You need to provide a valid email.' })
     .refine((email) => email.trim().length > 0, {
-      message: 'Você deve informar o email.',
+      message: 'You need to provide a email.',
     }),
   github: z
     .string()
     .regex(/^([a-z\d\-]+)$/i, {
       message:
-        "O usuario do github deve conter letras e numeros e separação por '-'.",
+        "The username must contain only letters and numbers and separated by '-'.",
     })
     .refine((github) => github.trim().length > 0, {
-      message: 'Você deve informar o nome completo.',
+      message: 'You need to provide your Github username.',
     }),
   linkedin: z
     .string()
     .regex(/^([a-z\d\-]+)$/i, {
       message:
-        "O usuario do linkedin deve conter letras e numeros e separação por '-'.",
+        "The username must contain only letters and numbers and separated by '-'.",
     })
     .refine((linkedin) => linkedin.trim().length > 0, {
-      message: 'Você deve informar a descrição.',
+      message: 'ou need to provide your Linkedin username.',
     }),
 })
 

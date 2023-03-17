@@ -67,7 +67,7 @@ const customStepSchema = z.object({
     .string()
     .transform((textColor) => textColor.toUpperCase())
     .refine((description) => description.trim().length > 0, {
-      message: 'Você deve informar a cor do texto.',
+      message: 'You need to provide the text color.',
     }),
 })
 

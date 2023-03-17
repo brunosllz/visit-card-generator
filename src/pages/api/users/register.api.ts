@@ -3,15 +3,25 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { z } from 'zod'
 
 const registerBodySchema = z.object({
-  name: z.string().transform((name) => name.toLowerCase()),
+  name: z.string().transform((name) => name.toLowerCase().replace(/\//g, '')),
   username: z.string().regex(/^([a-z\d\-]+)$/i),
   description: z.string(),
   email: z.string().email(),
-  github: z.string().regex(/^([a-z\d\-]+)$/i),
-  linkedin: z.string().regex(/^([a-z\d\-]+)$/i),
+  github: z
+    .string()
+    .regex(/^([a-z\d\-]+)$/i)
+    .transform((github) => github.toLowerCase()),
+  linkedin: z
+    .string()
+    .regex(/^([a-z\d\-]+)$/i)
+    .transform((linkedin) => linkedin.toLowerCase()),
   imageUrl: z.string().nullable(),
-  cardBackgroundColor: z.string(),
-  cardTextColor: z.string(),
+  cardBackgroundColor: z
+    .string()
+    .transform((cardBackgroundColor) => cardBackgroundColor.toUpperCase()),
+  cardTextColor: z
+    .string()
+    .transform((cardTextColor) => cardTextColor.toUpperCase()),
 })
 
 export default async function handler(

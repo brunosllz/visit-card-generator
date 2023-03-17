@@ -99,12 +99,9 @@ export function SocialStep({ navigateTo }: SocialStepProps) {
       className="bg-zinc-800 max-w-[546px] w-full mx-auto p-9 rounded-md flex flex-col gap-6"
     >
       <div className="flex flex-col gap-2">
-        <strong className="font-bold text-2xl">
-          Welcome to Generate Card!
-        </strong>
+        <strong className="font-bold text-2xl">Define your contacts</strong>
         <span className="text-gray-200">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. In unde quae
-          nisi tempore labore earum.
+          Define your networks so you can be found.
         </span>
       </div>
 

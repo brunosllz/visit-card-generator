@@ -18,7 +18,7 @@ model User {
   github                String
   linkedin              String
   description           String
-  image_url             String
+  image_url             String?
   card_background_color String
   card_text_color       String
   created_at            DateTime @default(now())

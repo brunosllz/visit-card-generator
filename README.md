@@ -33,3 +33,4 @@
 - [ ] Adicionar responsividade na aplicação;
 - [ ] Implementar markdown on the text area
 - [ ] Implementar testes nas api routes
+- [ ] Implementar testes de integração

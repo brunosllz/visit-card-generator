@@ -48,7 +48,7 @@ export default function UserPage({ user }: UserPageProps) {
             <span className="flex flex-col break-all">{user.description}</span>
           </div>
 
-          <div className="grid grid-cols-3 w-full gap-2">
+          <div className="grid grid-cols-1 sm:grid-cols-3 w-full gap-2">
             <Link
               href={`mailto:${user.email}`}
               target="_blank"

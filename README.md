@@ -23,7 +23,7 @@
 - [x] Ajustar estado de loading do submit do formulario;
 - [x] Adicionar variante de size no botão;
 - [x] Ajustar descrição do formulario;
-- [ ] Colocar as validações do formulario em ingles;
+- [x] Colocar as validações do formulario em ingles;
 - [x] Implementar tratativa de erro no download do card;
 - [ ] !Criar componente de Box;
 - [x] Criar função de replace de espaço para traço;

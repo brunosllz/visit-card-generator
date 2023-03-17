@@ -1,4 +1,4 @@
-import { GenerateCardForm } from '@/components/GenerateCardFom/Index'
+import { GenerateCardForm } from './components/GenerateCardFom/'
 
 export default function Home() {
   return (

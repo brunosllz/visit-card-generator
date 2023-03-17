@@ -2,9 +2,9 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import { TextInput } from '../TextInput'
-import { MultiStep } from '../MultiStep'
-import { Button } from '../Button'
+import { TextInput } from '@/components/TextInput'
+import { MultiStep } from '@/components/MultiStep'
+import { Button } from '@/components/Button'
 
 import { ArrowRight } from 'phosphor-react'
 import { useEffect } from 'react'

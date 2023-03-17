@@ -12,6 +12,7 @@ import Link from 'next/link'
 import { toast } from 'react-toastify'
 
 import { ArrowRight, Download } from 'phosphor-react'
+import { NextSeo } from 'next-seo'
 
 interface CardProps {
   user: {
@@ -66,74 +67,81 @@ export default function Card({ user }: CardProps) {
   }
 
   return (
-    <div className="bg-gradient-radial from-zinc-900/95 to-zinc-900 w-full h-screen flex flex-col gap-4 justify-center items-center">
-      <div className="flex gap-2 w-[400px]">
-        <Button
-          title="Download card"
-          size="sm"
-          onClick={handleDownloadCard}
-          className="max-w-[200px]"
-        >
-          <Download weight="bold" size={18} />
-        </Button>
-        <Button
-          title="Navigate to page"
-          size="sm"
-          variant="secondary"
-          onClick={handleNavigateToUserPage}
-          className="max-w-[200px]"
-        >
-          <ArrowRight weight="bold" size={18} />
-        </Button>
-      </div>
+    <>
+      <NextSeo
+        title={`${user.name} visit card | Visit Card Generator`}
+        description={`Visit card of ${user.name}`}
+      />
 
-      <div
-        className={`w-[400px] h-[600px] mx-auto rounded-md flex flex-col overflow-hidden shadow-lg shadow-black/40`}
-        style={{ backgroundColor: BACKGROUND_COLOR }}
-      >
-        <div
-          ref={cardRef}
-          className="flex flex-col w-full h-full p-11 gap-6 justify-between items-center"
-        >
-          <div className="flex flex-col gap-6 items-center">
-            {user.image_url && (
-              <Image
-                className="rounded-md"
-                src={user.image_url}
-                alt={user.username}
-                width={90}
-                height={90}
-                quality={100}
-                placeholder="blur"
-                blurDataURL="https://res.cloudinary.com/dhexs29hy/image/upload/v1678970237/image_4_rv8dpo.png"
-              />
-            )}
-
-            <span
-              className="text-2xl capitalize font-medium"
-              style={{ color: TEXT_COLOR }}
-            >
-              {user.name}
-            </span>
-          </div>
-
-          <Link
-            target="_blank"
-            href={`http://localhost:3000/${user.id}/${replaceSpaceToDash(
-              user.name,
-            )}`}
-            className="w-[180px] h-[180px] bg-white p-2 rounded-md"
+      <div className="bg-gradient-radial from-zinc-900/95 to-zinc-900 w-full h-screen flex flex-col gap-4 justify-center items-center">
+        <div className="flex gap-2 w-[400px]">
+          <Button
+            title="Download card"
+            size="sm"
+            onClick={handleDownloadCard}
+            className="max-w-[200px]"
           >
-            <QRCode
-              value={`http://localhost:3000/${user.id}/${replaceSpaceToDash(
+            <Download weight="bold" size={18} />
+          </Button>
+          <Button
+            title="Navigate to page"
+            size="sm"
+            variant="secondary"
+            onClick={handleNavigateToUserPage}
+            className="max-w-[200px]"
+          >
+            <ArrowRight weight="bold" size={18} />
+          </Button>
+        </div>
+
+        <div
+          className={`w-[400px] h-[600px] mx-auto rounded-md flex flex-col overflow-hidden shadow-lg shadow-black/40`}
+          style={{ backgroundColor: BACKGROUND_COLOR }}
+        >
+          <div
+            ref={cardRef}
+            className="flex flex-col w-full h-full p-11 gap-6 justify-between items-center"
+          >
+            <div className="flex flex-col gap-6 items-center">
+              {user.image_url && (
+                <Image
+                  className="rounded-md"
+                  src={user.image_url}
+                  alt={user.username}
+                  width={90}
+                  height={90}
+                  quality={100}
+                  placeholder="blur"
+                  blurDataURL="https://res.cloudinary.com/dhexs29hy/image/upload/v1678970237/image_4_rv8dpo.png"
+                />
+              )}
+
+              <span
+                className="text-2xl capitalize font-medium"
+                style={{ color: TEXT_COLOR }}
+              >
+                {user.name}
+              </span>
+            </div>
+
+            <Link
+              target="_blank"
+              href={`http://localhost:3000/${user.id}/${replaceSpaceToDash(
                 user.name,
               )}`}
-              className="w-full h-full"
-            />
-          </Link>
+              className="w-[180px] h-[180px] bg-white p-2 rounded-md"
+            >
+              <QRCode
+                value={`http://localhost:3000/${user.id}/${replaceSpaceToDash(
+                  user.name,
+                )}`}
+                className="w-full h-full"
+              />
+            </Link>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 

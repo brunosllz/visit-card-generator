@@ -29,7 +29,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         ref={ref}
         className={clsx(
-          `${className} text-sm rounded-md py-4 flex h-12 gap-2 justify-center items-center w-full min-w-[120px] transition-colors`,
+          `${className} text-sm rounded-md py-4 flex h-12 gap-2 justify-center items-center w-full min-w-[120px] transition-colors outline-none focus:ring-1 focus:ring-green-600 focus:ring-offset-1 focus:ring-offset-zinc-800`,
           {
             'bg-green-700  hover:bg-green-600 disabled:bg-green-800 disabled:opacity-85 disabled:cursor-not-allowed':
               variant === 'primary',

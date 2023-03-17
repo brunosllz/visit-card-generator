@@ -147,6 +147,7 @@ export function ContactsStep({ navigateTo }: ContactsStepProps) {
             <TextInput.Root>
               <TextInput.Input
                 placeholder="your-user"
+                hasError={!!errors.linkedin}
                 {...register('linkedin')}
               >
                 <TextInput.Prefix prefix="https://www.linkedin.com/in/" />

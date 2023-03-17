@@ -12,6 +12,7 @@ import { api } from '@/lib/axios'
 import { toast } from 'react-toastify'
 import { AxiosError } from 'axios'
 import { NextSeo } from 'next-seo'
+import clsx from 'clsx'
 
 interface DescribeStepProps {
   navigateTo: (step: 'describeStep' | 'contactsStep' | 'customStep') => void
@@ -146,7 +147,13 @@ export function DescribeStep({ navigateTo }: DescribeStepProps) {
               Description
               <textarea
                 placeholder="Description example"
-                className="bg-zinc-900 w-full min-h-[108px] max-h-[200px] px-4 py-3 outline-none resize-y rounded-md placeholder:text-zinc-500  focus:ring-1 focus:ring-green-600 focus:ring-offset-1 focus:ring-offset-zinc-800"
+                className={clsx(
+                  'bg-zinc-900 w-full min-h-[108px] max-h-[200px] px-4 py-3 outline-none resize-y rounded-md placeholder:text-zinc-500 focus:ring-1',
+                  {
+                    'focus:ring-green-600': !errors.description,
+                    'focus:ring-red-500': errors.description,
+                  },
+                )}
                 {...register('description')}
               />
             </label>

@@ -5,9 +5,15 @@ import { TextInput } from '@/components/TextInput'
 import { ToggleGroupButton } from '@/components/ToggleGroupButton'
 
 import { UploadSimple } from 'phosphor-react'
+import clsx from 'clsx'
 
 export function CustomPreviewCardForm() {
-  const { register, watch, control } = useFormContext()
+  const {
+    register,
+    watch,
+    control,
+    formState: { errors },
+  } = useFormContext()
 
   const backgroundColor: string = watch('backgroundColor')
   const textColor: string = watch('textColor')
@@ -23,13 +29,20 @@ export function CustomPreviewCardForm() {
       <div className="flex flex-col gap-4">
         <label className="flex flex-col gap-2 relative ">
           Logo image
-          <TextInput.Root className="overflow-hidden relative rounded-md focus-within:ring-1 focus-within:ring-green-600">
+          <TextInput.Root
+            className={clsx(
+              'overflow-hidden relative rounded-md focus-within:ring-1 focus-within:ring-green-600',
+              {
+                'focus-within:ring-red-500': !!errors.logoImage,
+              },
+            )}
+          >
             <TextInput.Input
               type="file"
               accept="image/*"
               className="opacity-0"
               {...register('logoImage')}
-            ></TextInput.Input>
+            />
             <div className="absolute bg-zinc-900 w-full h-full flex items-center justify-center gap-2 cursor-pointer">
               {hasFileOnInput ? (
                 <>
@@ -48,6 +61,9 @@ export function CustomPreviewCardForm() {
               )}
             </div>
           </TextInput.Root>
+          <TextInput.MessageError
+            message={errors.logoImage?.message?.toString()}
+          />
         </label>
 
         <label className="flex flex-col gap-2">

@@ -17,7 +17,6 @@ jobs:
         with:
           node-version: 18
           cache: 'npm'
-          cache-dependency-path: '*/packages-lock.json'
 
       - name: Cache node modules
         id: cache-nodemodules
@@ -51,7 +50,6 @@ jobs:
         with:
           node-version: 18
           cache: 'npm'
-          cache-dependency-path: '*/packages-lock.json'
 
       - name: Cache node modules
         id: cache-nodemodules

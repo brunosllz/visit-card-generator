@@ -31,7 +31,9 @@
 - [x] Ajustar pagina do usuário;
 - [x] Ajustar butão de email da pagina do usuário;
 - [ ] Adicionar responsividade na aplicação;
-- [ ] Implementar markdown on the text area
-- [ ] Implementar testes nas api routes
-- [ ] Implementar testes de integração
-- [ ] Limitar numero de caracteres da text area
+- [ ] Implementar markdown on the text area;
+- [ ] Implementar testes nas api routes;
+- [ ] Implementar testes de integração;
+- [ ] Ajustar error focus da text area;
+- [ ] Salvar os dados do formulario em todos os estajos quando voltar;
+- [ ] Limitar numero de caracteres da text area;

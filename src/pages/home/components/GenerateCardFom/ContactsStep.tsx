@@ -12,13 +12,13 @@ import { NextSeo } from 'next-seo'
 
 const contactsStepSchema = z.object({
   email: z
-    .string({ required_error: 'YYou need to provide a email.' })
+    .string({ required_error: 'You need to provide a email.' })
     .email({ message: 'You need to provide a valid email.' })
     .refine((email) => email.trim().length > 0, {
       message: 'You need to provide a email.',
     }),
   github: z
-    .string()
+    .string({ required_error: 'You need to provide your Github username.' })
     .regex(/^([a-z\d\-]+)$/i, {
       message:
         "The username must contain only letters and numbers and separated by '-'.",
@@ -28,13 +28,13 @@ const contactsStepSchema = z.object({
     })
     .transform((github) => github.toLowerCase().replace(/\//g, '')),
   linkedin: z
-    .string()
+    .string({ required_error: 'You need to provide your Linkedin username.' })
     .regex(/^([a-z\d\-]+)$/i, {
       message:
         "The username must contain only letters and numbers and separated by '-'.",
     })
     .refine((linkedin) => linkedin.trim().length > 0, {
-      message: 'ou need to provide your Linkedin username.',
+      message: 'You need to provide your Linkedin username.',
     })
     .transform((linkedin) => linkedin.toLowerCase().replace(/\//g, '')),
 })

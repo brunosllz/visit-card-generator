@@ -29,7 +29,7 @@ const TextInputInput = forwardRef<HTMLInputElement, TextInputProps>(
     return (
       <div
         className={clsx(
-          `focus-within:ring-0 ${className} flex items-baseline bg-zinc-900 h-12 rounded-md px-4 py-3 min-w-full`,
+          `focus-within:ring-1 ${className} flex items-baseline bg-zinc-900 h-12 rounded-md px-4 py-3 min-w-full`,
           {
             'focus-within:ring-red-500': hasError,
             'focus-within:ring-green-600': !hasError,

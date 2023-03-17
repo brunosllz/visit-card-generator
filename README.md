@@ -12,12 +12,12 @@
 - [x] Adicionar validação nos inputs de linkedin e github;
 - [x] Implementar um componente de toast;
 - [x] Adicionar fallback para a imagem do card;
-- [ ] Verificar e tratar os erros das ações do usuário;
+- [x] Verificar e tratar os erros das ações do usuário;
 - [x] Ajustar escape da paleta de cores(era problema de estar clicando na area do placeholder);
 - [x] Adicionar funcionalidade de download do cartão;
 - [x] Ajustar o botão de upload (colocar uma animação, icone, algo mostre visualmente que a ação foi realizada);
-- [ ] Criar notificação para quando o usuário está sem internet;
-- [ ] Tratar os diferentes erros do submit do formulario (sem conexão, erros genericos, nome de usuário existente);
+- [x] Criar notificação para quando o usuário está sem internet;
+- [x] Tratar os diferentes erros do submit do formulario (sem conexão, erros genericos, nome de usuário existente);
 - [x] Deixar o erros que vem do zod mais amigaveis;
 - [x] Adionar o preenchimento dos campos se o usuário voltar a página;
 - [x] Ajustar estado de loading do submit do formulario;

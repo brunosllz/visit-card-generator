@@ -21,42 +21,42 @@ export function CustomPreviewCardForm() {
   return (
     <div className="grid grid-cols-2 gap-4">
       <div className="flex flex-col gap-4">
-        <label className="flex flex-col gap-2 relative">
+        <label className="flex flex-col gap-2 relative ">
           Logo image
-          <TextInput.Root>
+          <TextInput.Root className="overflow-hidden relative rounded-md focus-within:ring-1 focus-within:ring-green-600">
             <TextInput.Input
               type="file"
               accept="image/*"
               className="opacity-0"
               {...register('logoImage')}
-            />
+            ></TextInput.Input>
+            <div className="absolute bg-zinc-900 w-full h-full flex items-center justify-center gap-2 cursor-pointer">
+              {hasFileOnInput ? (
+                <>
+                  <UploadSimple
+                    size={20}
+                    weight="bold"
+                    className="text-green-600"
+                  />
+                  <span className="text-sm">Choice another image</span>
+                </>
+              ) : (
+                <>
+                  <UploadSimple size={20} weight="bold" />
+                  <span className="text-sm">Choice our logo image</span>
+                </>
+              )}
+            </div>
           </TextInput.Root>
-          <div className="absolute flex items-center gap-2 bottom-3 left-4 cursor-pointer">
-            {hasFileOnInput ? (
-              <>
-                <UploadSimple
-                  size={20}
-                  weight="bold"
-                  className="text-green-600"
-                />
-                <span className="text-sm">Choice another image</span>
-              </>
-            ) : (
-              <>
-                <UploadSimple size={20} weight="bold" />
-                <span className="text-sm">Choice our logo image</span>
-              </>
-            )}
-          </div>
         </label>
 
         <label className="flex flex-col gap-2">
           Background color
-          <div className="flex items-center bg-zinc-900 rounded-md">
+          <div className="flex items-center bg-zinc-900 rounded-md focus-within:ring-1 focus-within:ring-green-600">
             <TextInput.Root className="flex">
               <TextInput.Input
                 type="color"
-                className="cursor-pointer focus:outline-none bg-transparent"
+                className="cursor-pointer focus:outline-none focus-within:ring-0"
                 {...register('backgroundColor')}
               />
             </TextInput.Root>

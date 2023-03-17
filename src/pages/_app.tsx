@@ -12,7 +12,7 @@ export default function App({ Component, pageProps }: AppProps) {
         openGraph={{
           type: 'website',
           locale: 'pt_BR',
-          url: 'http://localhost:3000',
+          url: 'https://visit-card-generator-pi.vercel.app/',
           title: 'Generate your visit card fast and easy',
           siteName: 'Visit Card Generator',
         }}

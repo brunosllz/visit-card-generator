@@ -13,6 +13,7 @@ import { toast } from 'react-toastify'
 
 import { ArrowRight, Download } from 'phosphor-react'
 import { NextSeo } from 'next-seo'
+import { env } from '@/env'
 
 interface CardProps {
   user: {
@@ -38,7 +39,11 @@ export default function Card({ user }: CardProps) {
 
   async function handleNavigateToUserPage() {
     await router.push(
-      `http://localhost:3000/${user.id}/${replaceSpaceToDash(user.name)}`,
+      `${
+        env.NODE_ENV === 'development'
+          ? env.DEVELOPMENT_URL
+          : env.PRODUCTION_URL
+      }/${user.id}/${replaceSpaceToDash(user.name)}`,
     )
   }
 
@@ -126,15 +131,19 @@ export default function Card({ user }: CardProps) {
 
             <Link
               target="_blank"
-              href={`http://localhost:3000/${user.id}/${replaceSpaceToDash(
-                user.name,
-              )}`}
+              href={`${
+                env.NODE_ENV === 'development'
+                  ? env.DEVELOPMENT_URL
+                  : env.PRODUCTION_URL
+              }/${user.id}/${replaceSpaceToDash(user.name)}`}
               className="w-[180px] h-[180px] bg-white p-2 rounded-md"
             >
               <QRCode
-                value={`http://localhost:3000/${user.id}/${replaceSpaceToDash(
-                  user.name,
-                )}`}
+                value={`${
+                  env.NODE_ENV === 'development'
+                    ? env.DEVELOPMENT_URL
+                    : env.PRODUCTION_URL
+                }/${user.id}/${replaceSpaceToDash(user.name)}`}
                 className="w-full h-full"
               />
             </Link>

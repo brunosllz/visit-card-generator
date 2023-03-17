@@ -10,11 +10,11 @@ const registerBodySchema = z.object({
   github: z
     .string()
     .regex(/^([a-z\d\-]+)$/i)
-    .transform((github) => github.toLowerCase()),
+    .transform((github) => github.toLowerCase().replace(/\//g, '')),
   linkedin: z
     .string()
     .regex(/^([a-z\d\-]+)$/i)
-    .transform((linkedin) => linkedin.toLowerCase()),
+    .transform((linkedin) => linkedin.toLowerCase().replace(/\//g, '')),
   imageUrl: z.string().nullable(),
   cardBackgroundColor: z
     .string()

@@ -35,7 +35,8 @@ const describeStepSchema = z.object({
     })
     .refine((fullName) => fullName.trim().length > 0, {
       message: 'You need to provide your full name.',
-    }),
+    })
+    .transform((name) => name.toLowerCase().replace(/\//g, '')),
   description: z
     .string({
       required_error: 'You need to provide the description.',

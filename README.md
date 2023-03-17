@@ -34,3 +34,4 @@
 - [ ] Implementar markdown on the text area
 - [ ] Implementar testes nas api routes
 - [ ] Implementar testes de integração
+- [ ] Limitar numero de caracteres da text area

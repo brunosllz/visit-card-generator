@@ -25,7 +25,8 @@ const contactsStepSchema = z.object({
     })
     .refine((github) => github.trim().length > 0, {
       message: 'You need to provide your Github username.',
-    }),
+    })
+    .transform((github) => github.toLowerCase().replace(/\//g, '')),
   linkedin: z
     .string()
     .regex(/^([a-z\d\-]+)$/i, {
@@ -34,7 +35,8 @@ const contactsStepSchema = z.object({
     })
     .refine((linkedin) => linkedin.trim().length > 0, {
       message: 'ou need to provide your Linkedin username.',
-    }),
+    })
+    .transform((linkedin) => linkedin.toLowerCase().replace(/\//g, '')),
 })
 
 type ContactsStepInput = z.infer<typeof contactsStepSchema>

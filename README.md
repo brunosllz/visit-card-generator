@@ -27,5 +27,9 @@
 - [x] Implementar tratativa de erro no download do card;
 - [ ] !Criar componente de Box;
 - [x] Criar função de replace de espaço para traço;
-- [ ] criar pagina de 404;
+- [ ] Criar pagina de 404;
 - [x] Ajustar pagina do usuário;
+- [x] Ajustar butão de email da pagina do usuário;
+- [ ] Adicionar responsividade na aplicação;
+- [ ] Implementar markdown on the text area
+- [ ] Implementar testes nas api routes

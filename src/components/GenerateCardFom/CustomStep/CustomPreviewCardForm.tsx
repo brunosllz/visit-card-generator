@@ -52,11 +52,11 @@ export function CustomPreviewCardForm() {
 
         <label className="flex flex-col gap-2">
           Background color
-          <div className="flex items-center bg-zinc-900 rounded-md focus-within:ring-1 focus-within:ring-green-600">
+          <div className="flex items-center hover:cursor-pointer bg-zinc-900 rounded-md focus-within:ring-1 focus-within:ring-green-600">
             <TextInput.Root className="flex">
               <TextInput.Input
                 type="color"
-                className="cursor-pointer focus:outline-none focus-within:ring-0"
+                className="cursor-pointer focus-within:ring-transparent"
                 {...register('backgroundColor')}
               />
             </TextInput.Root>

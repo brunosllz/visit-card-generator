@@ -11,9 +11,10 @@ import { toast } from 'react-toastify'
 
 import { ArrowRight } from 'phosphor-react'
 import { AxiosError } from 'axios'
+import { NextSeo } from 'next-seo'
 
 interface CustomStepProps {
-  navigateTo: (step: 'describeStep' | 'socialStep' | 'customStep') => void
+  navigateTo: (step: 'describeStep' | 'contactsStep' | 'customStep') => void
 }
 
 interface UploadedImage {
@@ -148,46 +149,53 @@ export function CustomStep({ navigateTo }: CustomStepProps) {
   }
 
   function handleGoBack() {
-    navigateTo('socialStep')
+    navigateTo('contactsStep')
   }
 
   return (
-    <div className="bg-zinc-800 max-w-[546px] w-full mx-auto p-9 rounded-md flex flex-col gap-6">
-      <div className="flex flex-col gap-2">
-        <strong className="font-bold text-2xl">Almost there</strong>
-        <span className="text-gray-200">
-          Customize your card, make it your own.
-        </span>
+    <>
+      <NextSeo
+        title="Custom visit card | Visit Card Generator"
+        description="Customize your card, make it your own."
+      />
+
+      <div className="bg-zinc-800 max-w-[546px] w-full mx-auto p-9 rounded-md flex flex-col gap-6">
+        <div className="flex flex-col gap-2">
+          <strong className="font-bold text-2xl">Almost there</strong>
+          <span className="text-gray-200">
+            Customize your card, make it your own.
+          </span>
+        </div>
+
+        <MultiStep currentStep={3} size={3} />
+
+        <FormProvider {...customStepForm}>
+          <form
+            onSubmit={handleSubmit(handleSubmitSocial)}
+            className="flex flex-col gap-4"
+          >
+            <CustomPreviewCardForm />
+
+            <div className="flex gap-2">
+              <Button
+                title="Back"
+                type="button"
+                variant="secondary"
+                onClick={handleGoBack}
+              />
+
+              <Button
+                title="Next"
+                type="submit"
+                isLoading={isSubmitting}
+                disabled={isSubmitting}
+              >
+                <ArrowRight weight="bold" />
+              </Button>
+            </div>
+          </form>
+        </FormProvider>
       </div>
-
-      <MultiStep currentStep={3} size={3} />
-
-      <FormProvider {...customStepForm}>
-        <form
-          onSubmit={handleSubmit(handleSubmitSocial)}
-          className="flex flex-col gap-4"
-        >
-          <CustomPreviewCardForm />
-
-          <div className="flex gap-2">
-            <Button
-              title="Back"
-              type="button"
-              variant="secondary"
-              onClick={handleGoBack}
-            />
-
-            <Button
-              title="Next"
-              type="submit"
-              isLoading={isSubmitting}
-              disabled={isSubmitting}
-            >
-              <ArrowRight weight="bold" />
-            </Button>
-          </div>
-        </form>
-      </FormProvider>
-    </div>
+    </>
   )
 }

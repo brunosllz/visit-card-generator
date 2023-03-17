@@ -11,9 +11,10 @@ import { useEffect } from 'react'
 import { api } from '@/lib/axios'
 import { toast } from 'react-toastify'
 import { AxiosError } from 'axios'
+import { NextSeo } from 'next-seo'
 
 interface DescribeStepProps {
-  navigateTo: (step: 'describeStep' | 'socialStep' | 'customStep') => void
+  navigateTo: (step: 'describeStep' | 'contactsStep' | 'customStep') => void
 }
 
 const describeStepSchema = z.object({
@@ -64,7 +65,7 @@ export function DescribeStep({ navigateTo }: DescribeStepProps) {
       const describeInfo = JSON.stringify(data)
       sessionStorage.setItem('@generateCard:register', describeInfo)
 
-      navigateTo('socialStep')
+      navigateTo('contactsStep')
     } catch (error) {
       if (error instanceof AxiosError) {
         if (error.response?.status === 500) {
@@ -94,69 +95,76 @@ export function DescribeStep({ navigateTo }: DescribeStepProps) {
   }, [setValue])
 
   return (
-    <form
-      onSubmit={handleSubmit(handleSubmitDescribe)}
-      className="bg-zinc-800 max-w-[546px] w-full mx-auto p-9 rounded-md flex flex-col gap-6"
-    >
-      <div className="flex flex-col gap-2">
-        <strong className="font-bold text-2xl">
-          Welcome to Visit Card Generator!
-        </strong>
-        <span className="text-gray-200">
-          We need some information to create your visit card.
-        </span>
-      </div>
+    <>
+      <NextSeo
+        title="Home | Visit Card Generator"
+        description="Welcome to Visit Card Generator!"
+      />
 
-      <MultiStep currentStep={1} size={3} />
-      <div className="flex flex-col gap-4">
-        <label className="flex flex-col gap-2">
-          Username
-          <TextInput.Root>
-            <TextInput.Input
-              placeholder="john-doe"
-              hasError={!!errors.username}
-              {...register('username')}
-            />
-            <TextInput.MessageError message={errors.username?.message} />
-          </TextInput.Root>
-        </label>
-
-        <label className="flex flex-col gap-2">
-          Full name
-          <TextInput.Root>
-            <TextInput.Input
-              placeholder="John Doe"
-              hasError={!!errors.name}
-              {...register('name')}
-            />
-            <TextInput.MessageError message={errors.name?.message} />
-          </TextInput.Root>
-        </label>
-
-        <div className="flex flex-col gap-1">
-          <label className="flex flex-col gap-2">
-            Description
-            <textarea
-              placeholder="Description example"
-              className="bg-zinc-900 w-full min-h-[108px] max-h-[200px] px-4 py-3 outline-none resize-y rounded-md placeholder:text-zinc-500  focus:ring-1 focus:ring-green-600 focus:ring-offset-1 focus:ring-offset-zinc-800"
-              {...register('description')}
-            />
-          </label>
-
-          <span className="text-red-500 text-xs">
-            {errors.description?.message}
+      <form
+        onSubmit={handleSubmit(handleSubmitDescribe)}
+        className="bg-zinc-800 max-w-[546px] w-full mx-auto p-9 rounded-md flex flex-col gap-6"
+      >
+        <div className="flex flex-col gap-2">
+          <strong className="font-bold text-2xl">
+            Welcome to Visit Card Generator!
+          </strong>
+          <span className="text-gray-200">
+            We need some information to create your visit card.
           </span>
         </div>
 
-        <Button
-          title="Next"
-          type="submit"
-          isLoading={isSubmitting}
-          disabled={isSubmitting}
-        >
-          <ArrowRight weight="bold" />
-        </Button>
-      </div>
-    </form>
+        <MultiStep currentStep={1} size={3} />
+        <div className="flex flex-col gap-4">
+          <label className="flex flex-col gap-2">
+            Username
+            <TextInput.Root>
+              <TextInput.Input
+                placeholder="john-doe"
+                hasError={!!errors.username}
+                {...register('username')}
+              />
+              <TextInput.MessageError message={errors.username?.message} />
+            </TextInput.Root>
+          </label>
+
+          <label className="flex flex-col gap-2">
+            Full name
+            <TextInput.Root>
+              <TextInput.Input
+                placeholder="John Doe"
+                hasError={!!errors.name}
+                {...register('name')}
+              />
+              <TextInput.MessageError message={errors.name?.message} />
+            </TextInput.Root>
+          </label>
+
+          <div className="flex flex-col gap-1">
+            <label className="flex flex-col gap-2">
+              Description
+              <textarea
+                placeholder="Description example"
+                className="bg-zinc-900 w-full min-h-[108px] max-h-[200px] px-4 py-3 outline-none resize-y rounded-md placeholder:text-zinc-500  focus:ring-1 focus:ring-green-600 focus:ring-offset-1 focus:ring-offset-zinc-800"
+                {...register('description')}
+              />
+            </label>
+
+            <span className="text-red-500 text-xs">
+              {errors.description?.message}
+            </span>
+          </div>
+
+          <Button
+            title="Next"
+            type="submit"
+            isLoading={isSubmitting}
+            disabled={isSubmitting}
+          >
+            <ArrowRight weight="bold" />
+          </Button>
+        </div>
+      </form>
+    </>
   )
 }

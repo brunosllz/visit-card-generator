@@ -1,15 +1,15 @@
 import { useState } from 'react'
 import { CustomStep } from './CustomStep'
 import { DescribeStep } from './DescribeStep'
-import { SocialStep } from './SocialStep'
+import { ContactsStep } from './ContactsStep'
 
 export function GenerateCardForm() {
   const [navigateToStep, setNavigateToStep] = useState<
-    'describeStep' | 'socialStep' | 'customStep' | undefined
+    'describeStep' | 'contactsStep' | 'customStep' | undefined
   >('describeStep')
 
   function handleNavigateToStep(
-    step: 'describeStep' | 'socialStep' | 'customStep',
+    step: 'describeStep' | 'contactsStep' | 'customStep',
   ) {
     setNavigateToStep(step)
   }
@@ -18,8 +18,8 @@ export function GenerateCardForm() {
     <>
       {navigateToStep === 'describeStep' ? (
         <DescribeStep navigateTo={handleNavigateToStep} />
-      ) : navigateToStep === 'socialStep' ? (
-        <SocialStep navigateTo={handleNavigateToStep} />
+      ) : navigateToStep === 'contactsStep' ? (
+        <ContactsStep navigateTo={handleNavigateToStep} />
       ) : (
         <CustomStep navigateTo={handleNavigateToStep} />
       )}

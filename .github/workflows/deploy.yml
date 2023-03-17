@@ -1,8 +1,9 @@
 name: Deploy-application
 
-on: [push, pull_request]
-  branches:
-    - main
+on: 
+  push:
+    branches:
+      - main
 
 jobs:
   check_lint:

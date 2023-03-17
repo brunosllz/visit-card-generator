@@ -10,6 +10,7 @@ import { CustomPreviewCardForm } from './CustomPreviewCardForm'
 import { toast } from 'react-toastify'
 
 import { ArrowRight } from 'phosphor-react'
+import { AxiosError } from 'axios'
 
 interface CustomStepProps {
   navigateTo: (step: 'describeStep' | 'socialStep' | 'customStep') => void
@@ -126,14 +127,23 @@ export function CustomStep({ navigateTo }: CustomStepProps) {
       sessionStorage.removeItem('@generateCard:register')
       await router.push(`/cards/${describeUserInfoParsed.username}`)
     } catch (error) {
-      console.log(error)
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 500) {
+          return toast('We had a problem proceeding, try again later!', {
+            type: 'error',
+          })
+        }
 
-      toast(
-        'Ocorreu um problema ao criar o seu cartão, tente no novamente mais tarde!',
-        {
-          type: 'error',
-        },
-      )
+        if (error.response?.status === 409) {
+          toast('Username already registered.', {
+            type: 'error',
+          })
+        }
+      }
+
+      toast('We have a problem, check your internet connection.', {
+        type: 'error',
+      })
     }
   }
 

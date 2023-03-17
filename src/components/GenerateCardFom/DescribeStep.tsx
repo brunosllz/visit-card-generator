@@ -10,6 +10,7 @@ import { ArrowRight } from 'phosphor-react'
 import { useEffect } from 'react'
 import { api } from '@/lib/axios'
 import { toast } from 'react-toastify'
+import { AxiosError } from 'axios'
 
 interface DescribeStepProps {
   navigateTo: (step: 'describeStep' | 'socialStep' | 'customStep') => void
@@ -56,10 +57,18 @@ export function DescribeStep({ navigateTo }: DescribeStepProps) {
 
       navigateTo('socialStep')
     } catch (error) {
-      toast('Username already registered', {
-        type: 'error',
-      })
-      setFocus('username')
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 500) {
+          return toast('We had a problem proceeding, try again later!', {
+            type: 'error',
+          })
+        }
+
+        toast('Username already registered.', {
+          type: 'error',
+        })
+        setFocus('username')
+      }
     }
   }
 

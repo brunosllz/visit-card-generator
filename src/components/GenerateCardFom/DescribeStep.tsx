@@ -82,11 +82,10 @@ export function DescribeStep({ navigateTo }: DescribeStepProps) {
     >
       <div className="flex flex-col gap-2">
         <strong className="font-bold text-2xl">
-          Welcome to Generate Card!
+          Welcome to Visit Card Generator!
         </strong>
         <span className="text-gray-200">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. In unde quae
-          nisi tempore labore earum.
+          We need some information to create your visit card.
         </span>
       </div>
 

@@ -1,4 +1,4 @@
-import { describe, it, expect, vitest } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { fireEvent, render, screen } from '@testing-library/react'
 import { Button } from './Button'
 
@@ -10,7 +10,7 @@ describe('Button component', () => {
   })
 
   it('Should be called when the button is clicked', () => {
-    const handleMockedFn = vitest.fn()
+    const handleMockedFn = vi.fn()
 
     render(<Button title="example button title" onClick={handleMockedFn} />)
 

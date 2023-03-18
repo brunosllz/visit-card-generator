@@ -14,36 +14,46 @@
 ![](https://github.com/brunosllz/Ignite-timer/blob/main/src/assets/Cover.png)
 
 ## [](https://github.com/brunosllz/Platform_lab#--sobre-o-projeto) 💻 About the project
-
-Projeto desenvolvido no Ignite da [Rockeseat](https://www.rocketseat.com.br/), tento como propósito a criação de uma aplicação de **Pomodoro**.
+This project was developed as part of [Buzzvel](https://buzzvel.com/) technical test. The objective of the project was to create a solution to generate business cards that include a QR code. The QR code would be scanned by others and redirect to a page with the user's contact information, making it easier for people to find their information. The end result is a simple and effective solution to improve the visibility and accessibility of user's contact information.
 
 ---
 
 ## [](https://github.com/brunosllz/Platform_lab#-%EF%B8%8F-funcionalidades) ⚙️ Functionalities
 
-- Cadastro de ciclos
-- Histórico de ciclos
-- Gravar os ciclos em local store
+- Register personal describe
+- Register personal contacts
+- Custom visit card
+- Generate visit card
+- Download visit card
+- Generate page of contacts
 
 ---
 
 #### 🧭 Running the application
+This project use a database, here i`m using [Docker](https://www.docker.com/), for run this application you need to have the database up.
+
 ```bash
 # Clone this repository
 $ git clone https://github.com/brunosllz/visit-card-generator
 # Install the dependencies
 $ npm install
 # Run docker componse
-$ docker-compose up
-# Execute a aplicação
-$ npm run dev
+$ docker-compose up -d
 ```
 
+Now you need create ".env" file in the project root, like this [file](https://github.com/brunosllz/visit-card-generator/blob/main/.env-example).
+
+```bash
+# Run prisma migrate
+$ npx prisma migrate dev
+# Run the application
+$ npm run dev
+```
 ---
 
 ## [](https://github.com/brunosllz/Platform_lab#--tecnologias) 🛠 Technologies
 
-As seguintes ferramentas foram usadas na construção do projeto:
+The following tools were used in building the project:
 
 - Nextjs
 - Typescript

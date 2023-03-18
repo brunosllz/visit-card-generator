@@ -1,6 +1,6 @@
-import { prisma } from '@/lib/prisma'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { NextSeo } from 'next-seo'
+import { findUserById } from '@/lib/prisma/utils/find-user-by-id'
 
 import Image from 'next/image'
 import Link from 'next/link'
@@ -90,24 +90,17 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const id = String(params?.id)
 
-  const user = await prisma.user.findUnique({
-    where: { id },
-    select: {
-      id: true,
-      name: true,
-      email: true,
-      username: true,
-      github: true,
-      linkedin: true,
-      description: true,
-      image_url: true,
-    },
-  })
+  const foundUser = await findUserById(id)
 
-  if (!user) {
+  if (!foundUser) {
     return {
       notFound: true,
     }
+  }
+
+  const user = {
+    ...foundUser,
+    created_at: new Date(foundUser.created_at).toISOString(),
   }
 
   return {

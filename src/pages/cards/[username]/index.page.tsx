@@ -1,12 +1,12 @@
 import { useRef } from 'react'
 import { GetStaticPaths, GetStaticProps } from 'next'
-import { prisma } from '@/lib/prisma'
 import html2canvas from 'html2canvas'
 import { useRouter } from 'next/router'
-import { replaceSpaceToDash } from '@/utils/replaceSpaceToDash'
-import { NextSeo } from 'next-seo'
+import { replaceSpaceToDash } from '@/utils/replace-space-to-dash'
+import { findUserByUsername } from '@/lib/prisma/utils/find-user-by-username'
 import { env } from '@/env'
 
+import { NextSeo } from 'next-seo'
 import { Button } from '@/components/Button'
 import QRCode from 'react-qr-code'
 import Image from 'next/image'
@@ -164,26 +164,17 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const username = String(params?.username)
 
-  const user = await prisma.user.findUnique({
-    where: { username },
-    select: {
-      id: true,
-      name: true,
-      email: true,
-      username: true,
-      github: true,
-      linkedin: true,
-      description: true,
-      image_url: true,
-      card_background_color: true,
-      card_text_color: true,
-    },
-  })
+  const foundUser = await findUserByUsername(username)
 
-  if (!user) {
+  if (!foundUser) {
     return {
       notFound: true,
     }
+  }
+
+  const user = {
+    ...foundUser,
+    created_at: new Date(foundUser.created_at).toISOString(),
   }
 
   return {

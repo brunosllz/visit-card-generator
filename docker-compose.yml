@@ -2,7 +2,7 @@
 version: "3"
 
 services:
-  cookpedia-db:
+  database:
     image: mysql:latest
     restart: always
     ports:

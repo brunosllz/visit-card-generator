@@ -30,12 +30,12 @@
 - [ ] Criar pagina de 404;
 - [x] Ajustar pagina do usuário;
 - [x] Ajustar butão de email da pagina do usuário;
-- [ ] Adicionar responsividade na aplicação;
+- [x] Adicionar responsividade na aplicação;
 - [ ] Implementar markdown on the text area;
-- [ ] Implementar testes nas api routes;
-- [ ] Implementar testes de integração;
-- [ ] Ajustar error focus da text area;
+- [ ] !Implementar testes nas api routes;
+- [ ] !Implementar testes de integração;
+- [x] Ajustar error focus da text area;
 - [ ] Salvar os dados do formulario em todos os estajos quando voltar;
 - [ ] Limitar numero de caracteres da text area;
-- [ ] validar os limite maximos de todos os campos de texto;
-- [ ] Ajustar a url do QRCODE;
+- [x] validar os limite maximos de todos os campos de texto;
+- [x] Ajustar a url do QRCODE;

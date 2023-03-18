@@ -1,18 +1,18 @@
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+import clsx from 'clsx'
+import { AxiosError } from 'axios'
+import { api } from '@/lib/axios'
+import { NextSeo } from 'next-seo'
 
 import { TextInput } from '@/components/TextInput'
 import { MultiStep } from '@/components/MultiStep'
 import { Button } from '@/components/Button'
+import { toast } from 'react-toastify'
 
 import { ArrowRight } from 'phosphor-react'
-import { useEffect } from 'react'
-import { api } from '@/lib/axios'
-import { toast } from 'react-toastify'
-import { AxiosError } from 'axios'
-import { NextSeo } from 'next-seo'
-import clsx from 'clsx'
 
 interface DescribeStepProps {
   navigateTo: (step: 'describeStep' | 'contactsStep' | 'customStep') => void
@@ -68,7 +68,7 @@ export function DescribeStep({ navigateTo }: DescribeStepProps) {
       await api.get(`/users/${data.username}`)
 
       const describeInfo = JSON.stringify(data)
-      sessionStorage.setItem('@generateCard:register', describeInfo)
+      sessionStorage.setItem('@generateCard:describe', describeInfo)
 
       navigateTo('contactsStep')
     } catch (error) {
@@ -88,7 +88,7 @@ export function DescribeStep({ navigateTo }: DescribeStepProps) {
   }
 
   useEffect(() => {
-    const hasDescribeInfo = sessionStorage.getItem('@generateCard:register')
+    const hasDescribeInfo = sessionStorage.getItem('@generateCard:describe')
 
     if (hasDescribeInfo) {
       const DescribeInfoParsed = JSON.parse(hasDescribeInfo)

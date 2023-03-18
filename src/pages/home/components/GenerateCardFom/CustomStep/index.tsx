@@ -95,13 +95,25 @@ export function CustomStep({ navigateTo }: CustomStepProps) {
     try {
       const { backgroundColor, textColor, logoImage } = data
 
-      const describeUserInfo = sessionStorage.getItem('@generateCard:register')
-      if (!describeUserInfo) {
+      const describeInfo = sessionStorage.getItem('@generateCard:describe')
+      const contactsInfo = sessionStorage.getItem('@generateCard:contacts')
+
+      if (!describeInfo || !contactsInfo) {
         return
       }
 
       const hasImageFile = logoImage.length > 0
-      const describeUserInfoParsed = JSON.parse(describeUserInfo)
+      const describeInfoParsed: {
+        name: string
+        description: string
+        username: string
+      } = JSON.parse(describeInfo)
+      const contactsInfoParsed: {
+        github: string
+        linkedin: string
+        email: string
+      } = JSON.parse(contactsInfo)
+
       let uploadedImage: UploadedImage | null = null
 
       if (hasImageFile) {
@@ -121,14 +133,16 @@ export function CustomStep({ navigateTo }: CustomStepProps) {
       }
 
       await api.post('/users/register', {
-        ...describeUserInfoParsed,
+        ...describeInfoParsed,
+        ...contactsInfoParsed,
         imageUrl: uploadedImage ? uploadedImage.url : null,
         cardBackgroundColor: backgroundColor,
         cardTextColor: textColor,
       })
 
-      sessionStorage.removeItem('@generateCard:register')
-      await router.push(`/cards/${describeUserInfoParsed.username}`)
+      sessionStorage.removeItem('@generateCard:describe')
+      sessionStorage.removeItem('@generateCard:contacts')
+      await router.push(`/cards/${describeInfoParsed.username}`)
     } catch (error) {
       if (error instanceof AxiosError) {
         if (error.response?.status === 500) {
@@ -184,6 +198,7 @@ export function CustomStep({ navigateTo }: CustomStepProps) {
                 type="button"
                 variant="secondary"
                 onClick={handleGoBack}
+                disabled={isSubmitting}
               />
 
               <Button

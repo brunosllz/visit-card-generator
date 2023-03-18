@@ -18,10 +18,10 @@ model User {
   username              String   @unique
   github                String
   linkedin              String
-  description           String
+  description           String   @db.VarChar(277)
   image_url             String?
-  card_background_color String
-  card_text_color       String
+  card_background_color String   @db.VarChar(15)
+  card_text_color       String   @db.VarChar(15)
   created_at            DateTime @default(now())
 
   @@map("users")

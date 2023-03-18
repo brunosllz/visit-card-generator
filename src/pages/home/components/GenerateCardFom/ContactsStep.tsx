@@ -1,14 +1,14 @@
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useEffect } from 'react'
+import { NextSeo } from 'next-seo'
+import { z } from 'zod'
 
 import { Button } from '@/components/Button'
 import { MultiStep } from '@/components/MultiStep'
 import { TextInput } from '@/components/TextInput'
 
 import { ArrowRight } from 'phosphor-react'
-import { z } from 'zod'
-import { useEffect } from 'react'
-import { NextSeo } from 'next-seo'
 
 const contactsStepSchema = z.object({
   email: z
@@ -59,28 +59,20 @@ export function ContactsStep({ navigateTo }: ContactsStepProps) {
   })
 
   function handleSubmitContacts(data: ContactsStepInput) {
-    const describeInfo = sessionStorage.getItem('@generateCard:register')
-
     const { email, github, linkedin } = data
 
-    if (describeInfo) {
-      const describeInfoParse: {
-        username: string
-        name: string
-        description: string
-      } = JSON.parse(describeInfo)
-
-      const card = {
-        email,
-        github,
-        linkedin,
-        ...describeInfoParse,
-      }
-
-      sessionStorage.setItem('@generateCard:register', JSON.stringify(card))
-
-      navigateTo('customStep')
+    const contactsInfo = {
+      email,
+      github,
+      linkedin,
     }
+
+    sessionStorage.setItem(
+      '@generateCard:contacts',
+      JSON.stringify(contactsInfo),
+    )
+
+    navigateTo('customStep')
   }
 
   function handleGoBack() {
@@ -88,14 +80,14 @@ export function ContactsStep({ navigateTo }: ContactsStepProps) {
   }
 
   useEffect(() => {
-    const hasRegisterInfo = sessionStorage.getItem('@generateCard:register')
+    const hasContactsInfo = sessionStorage.getItem('@generateCard:contacts')
 
-    if (hasRegisterInfo) {
-      const registerInfo = JSON.parse(hasRegisterInfo)
+    if (hasContactsInfo) {
+      const ContactsInfo = JSON.parse(hasContactsInfo)
 
-      setValue('email', registerInfo.email)
-      setValue('github', registerInfo.github)
-      setValue('linkedin', registerInfo.linkedin)
+      setValue('email', ContactsInfo.email)
+      setValue('github', ContactsInfo.github)
+      setValue('linkedin', ContactsInfo.linkedin)
     }
   }, [setValue])
 

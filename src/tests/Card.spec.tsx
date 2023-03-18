@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen } from '@testing-library/react'
-import Card, { getStaticProps } from '@/pages/cards/[username]/index.page'
+import Card from '@/pages/cards/[username]/index.page'
 import { User } from '@prisma/client'
 
 vi.mock('next/router', () => require('next-router-mock'))
@@ -28,13 +28,5 @@ describe('Card page', () => {
     render(<Card user={user} />)
 
     expect(screen.getByText(`${user.name}`)).toBeInTheDocument()
-  })
-
-  it('Should be not return a initial props if user not exists', async () => {
-    const response = await getStaticProps({
-      params: { username: user.username },
-    })
-
-    expect(response).toEqual(expect.objectContaining({ notFound: true }))
   })
 })

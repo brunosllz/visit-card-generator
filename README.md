@@ -39,5 +39,5 @@
 - [x] Limitar numero de caracteres da text area;
 - [x] validar os limite maximos de todos os campos de texto;
 - [x] Ajustar a url do QRCODE;
-- [ ] Implementar testes nas paginas;
+- [x] Implementar testes nas paginas;
 - [ ] Colocar imagem no opengraph

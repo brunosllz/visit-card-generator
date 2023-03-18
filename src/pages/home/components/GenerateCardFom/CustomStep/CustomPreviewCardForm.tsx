@@ -56,7 +56,7 @@ export function CustomPreviewCardForm() {
               ) : (
                 <>
                   <UploadSimple size={20} weight="bold" />
-                  <span className="text-sm">Choice our logo image</span>
+                  <span className="text-sm">Choice your logo image</span>
                 </>
               )}
             </div>

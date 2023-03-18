@@ -146,27 +146,6 @@ export function DescribeStep({ navigateTo }: DescribeStepProps) {
             </TextInput.Root>
           </label>
 
-          {/* <div className="flex flex-col gap-1">
-            <label className="flex flex-col gap-2">
-              Description
-              <textarea
-                placeholder="Description example"
-                className={clsx(
-                  'bg-zinc-900 w-full min-h-[108px] max-h-[200px] px-4 py-3 outline-none resize-y rounded-md placeholder:text-zinc-500 focus:ring-1',
-                  {
-                    'focus:ring-green-600': !errors.description,
-                    'focus:ring-red-500': errors.description,
-                  },
-                )}
-                {...register('description')}
-              />
-            </label>
-
-            <span className="text-red-500 text-xs">
-              {errors.description?.message}
-            </span>
-          </div> */}
-
           <Textarea control={control} {...register('description')} />
 
           <Button

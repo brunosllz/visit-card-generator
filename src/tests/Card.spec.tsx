@@ -1,12 +1,15 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen } from '@testing-library/react'
-import Card from '@/pages/cards/[username]/index.page'
+import Card, { getStaticProps } from '@/pages/cards/[username]/index.page'
+import { User } from '@prisma/client'
 
 vi.mock('next/router', () => require('next-router-mock'))
 
 describe('Card page', () => {
-  it('Should be render correctly', () => {
-    const user = {
+  let user: User
+
+  beforeEach(async () => {
+    user = {
       id: 'fake-user-id',
       name: 'john doe',
       email: 'johndoe@email.com',
@@ -17,10 +20,21 @@ describe('Card page', () => {
       description: 'fake description',
       card_background_color: '#000000',
       card_text_color: '#FFFFFF',
+      created_at: new Date(),
     }
+  })
 
+  it('Should be render correctly', () => {
     render(<Card user={user} />)
 
     expect(screen.getByText(`${user.name}`)).toBeInTheDocument()
+  })
+
+  it('Should be not return a initial props if user not exists', async () => {
+    const response = await getStaticProps({
+      params: { username: user.username },
+    })
+
+    expect(response).toEqual(expect.objectContaining({ notFound: true }))
   })
 })

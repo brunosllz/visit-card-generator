@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react'
 
 import { MultiStep } from './MultiStep'
 
-describe('Card preview component', () => {
+describe('Multi step component', () => {
   it('Should be render correctly', () => {
     const CURRENT_STEP = 1
     const SIZE = 5

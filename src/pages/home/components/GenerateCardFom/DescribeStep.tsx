@@ -10,9 +10,9 @@ import { TextInput } from '@/components/TextInput'
 import { MultiStep } from '@/components/MultiStep'
 import { Button } from '@/components/Button'
 import { toast } from 'react-toastify'
+import { TextareaControl } from '@/components/TextareaControl'
 
 import { ArrowRight } from 'phosphor-react'
-import { Textarea } from '@/components/Textarea'
 
 interface DescribeStepProps {
   navigateTo: (step: 'describeStep' | 'contactsStep' | 'customStep') => void
@@ -146,7 +146,10 @@ export function DescribeStep({ navigateTo }: DescribeStepProps) {
             </TextInput.Root>
           </label>
 
-          <Textarea control={control} {...register('description')} />
+          <TextareaControl
+            control={control as any}
+            {...register('description')}
+          />
 
           <Button
             title="Next"

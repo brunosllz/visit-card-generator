@@ -4,8 +4,10 @@ const envSchema = z.object({
   NODE_ENV: z
     .enum(['development', 'test', 'production'])
     .default('development'),
-  NEXT_PUBLIC_DEVELOPMENT_URL: z.string(),
-  NEXT_PUBLIC_PRODUCTION_URL: z.string(),
+  NEXT_PUBLIC_DEVELOPMENT_URL: z.string().default('http://localhost:3000'),
+  NEXT_PUBLIC_PRODUCTION_URL: z
+    .string()
+    .default('https://visit-card-generator-pi.vercel.app'),
 })
 
 export const env = envSchema.parse({

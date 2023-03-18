@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import clsx from 'clsx'
 import { AxiosError } from 'axios'
 import { api } from '@/lib/axios'
 import { NextSeo } from 'next-seo'
@@ -13,6 +12,7 @@ import { Button } from '@/components/Button'
 import { toast } from 'react-toastify'
 
 import { ArrowRight } from 'phosphor-react'
+import { Textarea } from '@/components/Textarea'
 
 interface DescribeStepProps {
   navigateTo: (step: 'describeStep' | 'contactsStep' | 'customStep') => void
@@ -27,7 +27,7 @@ const describeStepSchema = z.object({
       message:
         "The username must contain only letters and numbers and separated by '-'.",
     })
-    .max(191, { message: 'you have reached the maximum character size' })
+    .max(191, { message: 'You have reached the maximum character size' })
     .refine((username) => username.trim().length > 0, {
       message: 'You need to provide the username.',
     }),
@@ -35,7 +35,7 @@ const describeStepSchema = z.object({
     .string({
       required_error: 'You need to provide your full name.',
     })
-    .max(191, { message: 'you have reached the maximum character size' })
+    .max(191, { message: 'You have reached the maximum character size' })
     .refine((fullName) => fullName.trim().length > 0, {
       message: 'You need to provide your full name.',
     })
@@ -44,7 +44,7 @@ const describeStepSchema = z.object({
     .string({
       required_error: 'You need to provide the description.',
     })
-    .max(277, { message: 'you have reached the maximum character size' })
+    .max(277, { message: 'You have reached the maximum character size' })
     .refine((description) => description.trim().length > 0, {
       message: 'You need to provide the description.',
     }),
@@ -58,6 +58,7 @@ export function DescribeStep({ navigateTo }: DescribeStepProps) {
     handleSubmit,
     setValue,
     setFocus,
+    control,
     formState: { errors, isSubmitting },
   } = useForm<DescribeStepInput>({
     resolver: zodResolver(describeStepSchema),
@@ -145,7 +146,7 @@ export function DescribeStep({ navigateTo }: DescribeStepProps) {
             </TextInput.Root>
           </label>
 
-          <div className="flex flex-col gap-1">
+          {/* <div className="flex flex-col gap-1">
             <label className="flex flex-col gap-2">
               Description
               <textarea
@@ -164,7 +165,9 @@ export function DescribeStep({ navigateTo }: DescribeStepProps) {
             <span className="text-red-500 text-xs">
               {errors.description?.message}
             </span>
-          </div>
+          </div> */}
+
+          <Textarea control={control} {...register('description')} />
 
           <Button
             title="Next"

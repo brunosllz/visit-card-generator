@@ -63,11 +63,11 @@ const customStepSchema = z.object({
           }),
   backgroundColor: z
     .string()
-    .max(15, { message: 'you have reached the maximum character size' })
+    .max(15, { message: 'You have reached the maximum character size' })
     .transform((backgroundColor) => backgroundColor.toUpperCase()),
   textColor: z
     .string()
-    .max(15, { message: 'you have reached the maximum character size' })
+    .max(15, { message: 'You have reached the maximum character size' })
     .transform((textColor) => textColor.toUpperCase())
     .refine((description) => description.trim().length > 0, {
       message: 'You need to provide the text color.',

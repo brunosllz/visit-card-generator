@@ -11,7 +11,7 @@
 
 <br/>
 
-![](https://github.com/brunosllz/Ignite-timer/blob/main/src/assets/Cover.png)
+![](https://github.com/brunosllz/visit-card-generator/blob/main/src/assets/github-cover.png)
 
 ## [](https://github.com/brunosllz/Platform_lab#--sobre-o-projeto) 💻 About the project
 This project was developed as part of [Buzzvel](https://buzzvel.com/) technical test. The objective of the project was to create a solution to generate business cards that include a QR code. The QR code would be scanned by others and redirect to a page with the user's contact information, making it easier for people to find their information. The end result is a simple and effective solution to improve the visibility and accessibility of user's contact information.

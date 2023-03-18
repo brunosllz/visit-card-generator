@@ -14,7 +14,7 @@ export function MultiStep({
   return (
     <div className={className}>
       <label className="text-xs">
-        {currentStep} de {size}
+        {currentStep} of {size}
       </label>
 
       <div className={`grid grid-cols-${size} gap-2 mt-1`}>

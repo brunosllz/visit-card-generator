@@ -16,6 +16,7 @@ export function Textarea<T extends FieldValues = FieldValues>({
   } = useController({ name, control })
 
   const MAX_LENGTH = 277
+
   return (
     <div className="flex flex-col gap-1 relative">
       <label className="flex flex-col gap-2">
@@ -34,8 +35,12 @@ export function Textarea<T extends FieldValues = FieldValues>({
         />
       </label>
       <span className="text-sm self-end">
-        <span className={clsx({ 'text-red-500': value.length > MAX_LENGTH })}>
-          {value.length}
+        <span
+          className={clsx({
+            'text-red-500': String(value).length > MAX_LENGTH,
+          })}
+        >
+          {String(value).length}
         </span>{' '}
         / {MAX_LENGTH}
       </span>

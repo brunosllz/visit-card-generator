@@ -1,43 +1,56 @@
-## Link Qrcode
 
-- [x] Criar formulário de 3 etapas;
-  - [x] etapa 1: definir name e descrição;
-  - [x] etapa 2: definir media de contato;
-  - [x] etapa 3: defnir customização (cor, logo, ...);
-- [x] Persistir as cores do cartão no banco;
-- [x] Adicionar pagina de contatos do usuário;
-- [x] Adicionar validação nos inputs de colores;
-- [x] Verificar possivel erro que pode ocorrer quando fazer o submit do form sem marcar a cor do texto 
-- [x] Ajustar validação do username não está aceitando numero;
-- [x] Adicionar validação nos inputs de linkedin e github;
-- [x] Implementar um componente de toast;
-- [x] Adicionar fallback para a imagem do card;
-- [x] Verificar e tratar os erros das ações do usuário;
-- [x] Ajustar escape da paleta de cores(era problema de estar clicando na area do placeholder);
-- [x] Adicionar funcionalidade de download do cartão;
-- [x] Ajustar o botão de upload (colocar uma animação, icone, algo mostre visualmente que a ação foi realizada);
-- [x] Criar notificação para quando o usuário está sem internet;
-- [x] Tratar os diferentes erros do submit do formulario (sem conexão, erros genericos, nome de usuário existente);
-- [x] Deixar o erros que vem do zod mais amigaveis;
-- [x] Adionar o preenchimento dos campos se o usuário voltar a página;
-- [x] Ajustar estado de loading do submit do formulario;
-- [x] Adicionar variante de size no botão;
-- [x] Ajustar descrição do formulario;
-- [x] Colocar as validações do formulario em ingles;
-- [x] Implementar tratativa de erro no download do card;
-- [ ] !Criar componente de Box;
-- [x] Criar função de replace de espaço para traço;
-- [ ] Criar pagina de 404;
-- [x] Ajustar pagina do usuário;
-- [x] Ajustar butão de email da pagina do usuário;
-- [x] Adicionar responsividade na aplicação;
-- [ ] Implementar markdown on the text area;
-- [ ] !Implementar testes nas api routes;
-- [ ] !Implementar testes de integração;
-- [x] Ajustar error focus da text area;
-- [x] Salvar os dados do formulario em todos os estajos quando voltar;
-- [x] Limitar numero de caracteres da text area;
-- [x] validar os limite maximos de todos os campos de texto;
-- [x] Ajustar a url do QRCODE;
-- [x] Implementar testes nas paginas;
-- [ ] Colocar imagem no opengraph
+<h4 align="center">
+ 🪪 Visit Card Generator 🪪
+</h4>
+
+<p align="center">
+  <a href="#--about-the-project">About</a> •
+  <a href="#-%EF%B8%8F-functionalities">Functionalities</a> •
+  <a href="#--technologies">Technologies</a>
+</p>
+
+<br/>
+
+![](https://github.com/brunosllz/Ignite-timer/blob/main/src/assets/Cover.png)
+
+## [](https://github.com/brunosllz/Platform_lab#--sobre-o-projeto) 💻 About the project
+
+Projeto desenvolvido no Ignite da [Rockeseat](https://www.rocketseat.com.br/), tento como propósito a criação de uma aplicação de **Pomodoro**.
+
+---
+
+## [](https://github.com/brunosllz/Platform_lab#-%EF%B8%8F-funcionalidades) ⚙️ Functionalities
+
+- Cadastro de ciclos
+- Histórico de ciclos
+- Gravar os ciclos em local store
+
+---
+
+#### 🧭 Running the application
+```bash
+# Clone this repository
+$ git clone https://github.com/brunosllz/visit-card-generator
+# Install the dependencies
+$ npm install
+# Run docker componse
+$ docker-compose up
+# Execute a aplicação
+$ npm run dev
+```
+
+---
+
+## [](https://github.com/brunosllz/Platform_lab#--tecnologias) 🛠 Technologies
+
+As seguintes ferramentas foram usadas na construção do projeto:
+
+- Nextjs
+- Typescript
+- Prisma
+- React Hook Form
+- Zod
+- Vitest
+
+
+> See the file [package.json](https://github.com/brunosllz/visit-card-generator/blob/main/package.json)

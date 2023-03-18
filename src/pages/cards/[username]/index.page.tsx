@@ -4,6 +4,8 @@ import { prisma } from '@/lib/prisma'
 import html2canvas from 'html2canvas'
 import { useRouter } from 'next/router'
 import { replaceSpaceToDash } from '@/utils/replaceSpaceToDash'
+import { NextSeo } from 'next-seo'
+import { env } from '@/env'
 
 import { Button } from '@/components/Button'
 import QRCode from 'react-qr-code'
@@ -12,8 +14,6 @@ import Link from 'next/link'
 import { toast } from 'react-toastify'
 
 import { ArrowRight, Download } from 'phosphor-react'
-import { NextSeo } from 'next-seo'
-import { env } from '@/env'
 
 interface CardProps {
   user: {
@@ -41,8 +41,8 @@ export default function Card({ user }: CardProps) {
     await router.push(
       `${
         env.NODE_ENV === 'development'
-          ? env.DEVELOPMENT_URL
-          : env.PRODUCTION_URL
+          ? env.NEXT_PUBLIC_DEVELOPMENT_URL
+          : env.NEXT_PUBLIC_PRODUCTION_URL
       }/${user.id}/${replaceSpaceToDash(user.name)}`,
     )
   }
@@ -133,16 +133,16 @@ export default function Card({ user }: CardProps) {
               target="_blank"
               href={`${
                 env.NODE_ENV === 'development'
-                  ? env.DEVELOPMENT_URL
-                  : env.PRODUCTION_URL
+                  ? env.NEXT_PUBLIC_DEVELOPMENT_URL
+                  : env.NEXT_PUBLIC_PRODUCTION_URL
               }/${user.id}/${replaceSpaceToDash(user.name)}`}
               className="w-[180px] h-[180px] bg-white p-2 rounded-md"
             >
               <QRCode
                 value={`${
                   env.NODE_ENV === 'development'
-                    ? env.DEVELOPMENT_URL
-                    : env.PRODUCTION_URL
+                    ? env.NEXT_PUBLIC_DEVELOPMENT_URL
+                    : env.NEXT_PUBLIC_PRODUCTION_URL
                 }/${user.id}/${replaceSpaceToDash(user.name)}`}
                 className="w-full h-full"
               />

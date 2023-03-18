@@ -5,6 +5,10 @@ const nextConfig = {
   images: {
     domains: ['res.cloudinary.com'],
   },
+  publicRuntimeConfig: {
+    PRODUCTION_URL: process.env.PRODUCTION_URL,
+    DEVELOPMENT_URL: process.env.DEVELOPMENT_URL,
+  },
 }
 
 module.exports = nextConfig

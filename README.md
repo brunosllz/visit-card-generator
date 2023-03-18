@@ -37,3 +37,5 @@
 - [ ] Ajustar error focus da text area;
 - [ ] Salvar os dados do formulario em todos os estajos quando voltar;
 - [ ] Limitar numero de caracteres da text area;
+- [ ] validar os limite maximos de todos os campos de texto;
+- [ ] Ajustar a url do QRCODE;

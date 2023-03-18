@@ -36,6 +36,8 @@
 - [ ] !Implementar testes de integração;
 - [x] Ajustar error focus da text area;
 - [x] Salvar os dados do formulario em todos os estajos quando voltar;
-- [ ] Limitar numero de caracteres da text area;
+- [x] Limitar numero de caracteres da text area;
 - [x] validar os limite maximos de todos os campos de texto;
 - [x] Ajustar a url do QRCODE;
+- [ ] Implementar testes nas paginas;
+- [ ] Colocar imagem no opengraph

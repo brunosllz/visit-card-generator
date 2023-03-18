@@ -14,7 +14,7 @@ const contactsStepSchema = z.object({
   email: z
     .string({ required_error: 'You need to provide a email.' })
     .email({ message: 'You need to provide a valid email.' })
-    .max(191, { message: 'You have reached the maximum character size' })
+    .max(191, { message: 'You have reached the maximum character size.' })
     .refine((email) => email.trim().length > 0, {
       message: 'You need to provide a email.',
     }),
@@ -24,7 +24,7 @@ const contactsStepSchema = z.object({
       message:
         "The username must contain only letters and numbers and separated by '-'.",
     })
-    .max(191, { message: 'You have reached the maximum character size' })
+    .max(191, { message: 'You have reached the maximum character size.' })
     .refine((github) => github.trim().length > 0, {
       message: 'You need to provide your Github username.',
     })
@@ -35,7 +35,7 @@ const contactsStepSchema = z.object({
       message:
         "The username must contain only letters and numbers and separated by '-'.",
     })
-    .max(191, { message: 'You have reached the maximum character size' })
+    .max(191, { message: 'You have reached the maximum character size.' })
     .refine((linkedin) => linkedin.trim().length > 0, {
       message: 'You need to provide your Linkedin username.',
     })

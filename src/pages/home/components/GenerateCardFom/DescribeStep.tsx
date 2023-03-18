@@ -27,7 +27,7 @@ const describeStepSchema = z.object({
       message:
         "The username must contain only letters and numbers and separated by '-'.",
     })
-    .max(191, { message: 'You have reached the maximum character size' })
+    .max(191, { message: 'You have reached the maximum character size.' })
     .refine((username) => username.trim().length > 0, {
       message: 'You need to provide the username.',
     }),
@@ -35,7 +35,7 @@ const describeStepSchema = z.object({
     .string({
       required_error: 'You need to provide your full name.',
     })
-    .max(191, { message: 'You have reached the maximum character size' })
+    .max(191, { message: 'You have reached the maximum character size.' })
     .refine((fullName) => fullName.trim().length > 0, {
       message: 'You need to provide your full name.',
     })
@@ -44,7 +44,7 @@ const describeStepSchema = z.object({
     .string({
       required_error: 'You need to provide the description.',
     })
-    .max(277, { message: 'You have reached the maximum character size' })
+    .max(277, { message: 'You have reached the maximum character size.' })
     .refine((description) => description.trim().length > 0, {
       message: 'You need to provide the description.',
     }),

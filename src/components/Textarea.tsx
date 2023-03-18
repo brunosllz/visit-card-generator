@@ -17,8 +17,6 @@ export function Textarea<T extends FieldValues = FieldValues>({
 
   const MAX_LENGTH = 277
 
-  console.log(String(value))
-
   return (
     <div className="flex flex-col gap-1 relative">
       <label className="flex flex-col gap-2">

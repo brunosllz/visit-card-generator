@@ -30,7 +30,7 @@ This project was developed as part of [Buzzvel](https://buzzvel.com/) technical 
 ---
 
 #### 🧭 Running the application
-This project use a database, here i`m using [Docker](https://www.docker.com/), for run this application you need to have the database up.
+This project use a database, here i`m using [Docker](https://www.docker.com/), for run this application you need to have the MySQL database up.
 
 ```bash
 # Clone this repository

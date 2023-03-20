@@ -37,7 +37,7 @@ This project use a database, here i`m using [Docker](https://www.docker.com/), f
 $ git clone https://github.com/brunosllz/visit-card-generator
 # Install the dependencies
 $ npm install
-# Run docker componse
+# Run docker compose
 $ docker-compose up -d
 ```
 

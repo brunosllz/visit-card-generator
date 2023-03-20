@@ -44,7 +44,7 @@ $ docker-compose up -d
 Now you need create ".env" file in the project root, like this [file](https://github.com/brunosllz/visit-card-generator/blob/main/.env-example).
 
 ```bash
-# Run prisma migrate
+# Run database migrations
 $ npx prisma migrate dev
 # Run the application
 $ npm run dev
